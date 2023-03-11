@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+        <file>Common/qmldir</file>
+        <file>Common/joystick.qml</file>
+    </qresource>
+</RCC>
