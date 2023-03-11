@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/images/blue_moon.png</file>
+        <file>res/images/fonts.png</file>
+        <file>res/images/ball.png</file>
+        <file>res/images/red_background.png</file>
+        <file>res/images/red_moon.png</file>
+        <file>res/images/particle_ball.png</file>
+        <file>res/images/black_background.png</file>
+        <file>res/images/right_pong.png</file>
+        <file>res/images/blue_background.png</file>
+        <file>res/images/black_moon.png</file>
+        <file>res/images/red_bottom.png</file>
+        <file>res/images/toolbar.png</file>
+        <file>res/images/left_pong.png</file>
+        <file>res/images/blue_bottom.png</file>
+        <file>res/images/icons/epong.png</file>
+    </qresource>
+</RCC>
