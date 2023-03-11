@@ -15,5 +15,26 @@
         <file>res/images/left_pong.png</file>
         <file>res/images/blue_bottom.png</file>
         <file>res/images/icons/epong.png</file>
+        <file>res/images/backgrounds/bgr00.jpg</file>
+        <file>res/images/backgrounds/bgr01.jpg</file>
+        <file>res/images/backgrounds/bgr02.jpg</file>
+        <file>res/images/backgrounds/bgr03.jpg</file>
+        <file>res/images/backgrounds/bgr04.jpg</file>
+        <file>res/images/backgrounds/bgr05.jpg</file>
+        <file>res/images/backgrounds/bgr06.jpg</file>
+        <file>res/images/backgrounds/bgr07.jpg</file>
+        <file>res/images/backgrounds/bgr08.jpg</file>
+        <file>res/images/backgrounds/bgr09.jpg</file>
+        <file>res/images/backgrounds/bgr10.jpg</file>
+        <file>res/images/backgrounds/bgr11.jpg</file>
+        <file>res/images/backgrounds/bgr12.jpg</file>
+        <file>res/images/backgrounds/bgr13.jpg</file>
+        <file>res/images/backgrounds/bgr14.jpg</file>
+        <file>res/images/backgrounds/bgr15.jpg</file>
+        <file>res/images/backgrounds/bgr16.jpg</file>
+        <file>res/images/backgrounds/bgr17.jpg</file>
+        <file>res/images/backgrounds/bgr18.jpg</file>
+        <file>res/images/backgrounds/bgr19.jpg</file>
+        <file>res/images/backgrounds/bgr20.jpg</file>
     </qresource>
 </RCC>
