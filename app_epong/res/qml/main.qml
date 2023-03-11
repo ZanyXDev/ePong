@@ -60,9 +60,31 @@ QQC2.ApplicationWindow {
         source: Utils.getRandomBackGround()
 
         fillMode: Image.PreserveAspectCrop
+
+        Behavior on opacity {
+            NumberAnimation {
+                easing.type: Easing.OutElastic
+                easing.amplitude: 3.0
+                easing.period: 2.0
+                duration: 300
+            }
+        }
     }
 
     // ----- Visual children
+    //  ----- non visual children
+    // ----- Custom non-visual children
+    Timer {
+        id: autoChangeBackgroundTimer
+        interval: 1000 /// TODO move to settings!
+        repeat: true
+        running: true
+        onTriggered: {
+            background.opacity = 0.1
+            background.source = Utils.getRandomBackGround()
+            background.opacity = 0.9
+        }
+    }
 
     // ----- JavaScript functions
 }
