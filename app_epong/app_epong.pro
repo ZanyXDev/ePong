@@ -32,6 +32,7 @@ SOURCES += \
 RESOURCES += \
         images.qrc \
         qml.qrc \
+	js.qrc \
         ../shared/quick_shared.qrc \
         ../shared/fonts.qrc
 

@@ -5,6 +5,7 @@ import QtQuick.Controls 2.15 as QQC2
 import QtGraphicalEffects 1.15
 
 import Common 1.0
+import "qrc:/res/js/util.js" as Utils
 
 QQC2.ApplicationWindow {
     id: appWnd
@@ -53,10 +54,12 @@ QQC2.ApplicationWindow {
         }
     }
 
-    background: Rectangle {
+    background: Image {
         id: background
         anchors.fill: parent
-        color: "lightgrey"
+        source: Utils.getRandomBackGround()
+
+        fillMode: Image.PreserveAspectCrop
     }
 
     // ----- Visual children
