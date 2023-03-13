@@ -36,5 +36,6 @@
         <file>res/images/backgrounds/bgr18.jpg</file>
         <file>res/images/backgrounds/bgr19.jpg</file>
         <file>res/images/backgrounds/bgr20.jpg</file>
+        <file>res/images/epong.jpeg</file>
     </qresource>
 </RCC>
