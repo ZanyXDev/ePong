@@ -20,3 +20,18 @@ function getRandomBackGround() {
     console.log(`qrc:/res/images/backgrounds/bgr${bgrStr}.jpg`)
     return "qrc:/res/images/backgrounds/bgr" + bgrStr + ".jpg"
 }
+
+function getNextBgrImage(index) {
+
+    var bgrStr
+    if ((index === undefined) || (index > 20) || (index < 0)) {
+        index = 0
+    }
+    if (index < 10) {
+        bgrStr = "0" + index
+    } else {
+        bgrStr = index
+    }
+
+    return "qrc:/res/images/backgrounds/bgr" + bgrStr + ".jpg"
+}
