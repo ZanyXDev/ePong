@@ -15,6 +15,11 @@
 #include <QtAndroidExtras/QAndroidJniEnvironment>
 #endif
 
+#ifdef QT_DEBUG
+#include <QDirIterator>
+#endif
+
+
 void createAppConfigFolder()
 {
     QDir dirConfig(
@@ -118,10 +123,16 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:///");
-    //engine.addImportPath("qrc:/Common/");
+
 #ifdef QT_DEBUG
     scale = 1.5;
      qDebug() << "importPathList:" <<engine.importPathList();
+
+     QDirIterator it(":", QDirIterator::Subdirectories);
+     while (it.hasNext()) {
+         qDebug() << it.next();
+     }
+
 #endif
 
     QQmlContext *context = engine.rootContext();
