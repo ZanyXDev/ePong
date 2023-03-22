@@ -5,7 +5,7 @@
         <file>Common/joystick.qml</file>
         <file>AppEffects/qmldir</file>
         <file>AppEffects/shine.qml</file>
-        <file alias="shine.svg">effects/shine.svg</file>
+        <file alias="shine.svg">EffectsImages/shine.svg</file>
 	<file>Units/qmldir</file>
 	<file>Units/logo_item.qml</file>
     </qresource>

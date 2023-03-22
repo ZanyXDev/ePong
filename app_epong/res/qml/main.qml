@@ -29,6 +29,11 @@ QQC2.ApplicationWindow {
                                                            * DevicePixelRatio
     height: (screenOrientation == Qt.PortraitOrientation) ? 480 * DevicePixelRatio : 320
                                                             * DevicePixelRatio
+    maximumHeight: height
+    maximumWidth: width
+
+    minimumHeight: height
+    minimumWidth: width
     // ----- Then comes the other properties. There's no predefined order to these.
     visible: true
     visibility: (isMobile) ? Window.FullScreen : Window.Windowed
@@ -68,7 +73,34 @@ QQC2.ApplicationWindow {
     }
 
     // ----- Visual children
+    LogoItem {
+        id: logoItem
+        width: parent.width * 0.9
+        height: 126. / 346. * width
+        anchors.topMargin: 30 * DevicePixelRatio
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        z: 1
+        MouseArea {
+            id: logoItemMouseArea
+            anchors.fill: parent
+            onClicked: {
+
+                //screen.state = "stateMainMenu"
+            }
+        }
+        onOpacityChanged: {
+            if (isDebugMode) {
+                console.log("logoItem opacity changed")
+            }
+        }
+
+        Component.onCompleted: {
+            autoStartTimer.start()
+        }
+    }
     //  ----- non visual children
+
     // ----- Custom non-visual children
     Settings {
         id: mSettings
