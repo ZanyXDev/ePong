@@ -92,8 +92,20 @@ QQC2.ApplicationWindow {
                 logoItem.opacity = 0
             }
         }
-
     }
+
+    AppVersionTxt {
+        id: appVerText
+        text: "ver." + appVersion
+        color: "white"
+        z: 2
+        opacity: logoItem.opacity
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20 * DevicePixelRatio
+        anchors.right: parent.right
+        anchors.rightMargin: 20 * DevicePixelRatio
+    }
+
     //  ----- non visual children
 
     // ----- Custom non-visual children

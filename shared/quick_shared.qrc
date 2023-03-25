@@ -4,6 +4,7 @@
         <file>Common/qmldir</file>
         <file>Common/joystick.qml</file>
 	<file>Common/app_singleton.qml</file>
+	<file>Common/app_ver_txt.qml</file>
         <file>AppEffects/qmldir</file>
         <file>AppEffects/shine.qml</file>
         <file alias="shine.svg">EffectsImages/shine.svg</file>

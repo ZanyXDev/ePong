@@ -4,7 +4,7 @@
 #include <QtGui/QGuiApplication>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
-#include <QtQuickControls2/QQuickStyle>
+
 #include <QtQml/qqml.h>
 #include <QScreen>
 #include <QVersionNumber>
@@ -19,7 +19,11 @@
 #include <QDirIterator>
 #endif
 
-
+/*!
+ * \brief Make docs encourage readers to query locale right
+ * \sa https://codereview.qt-project.org/c/qt/qtdoc/+/297560
+ */
+// create folder AppConfigLocation
 void createAppConfigFolder()
 {
     QDir dirConfig(
@@ -32,32 +36,8 @@ void createAppConfigFolder()
     }
 }
 
-int main(int argc, char *argv[]) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
-
-    QCoreApplication::setOrganizationName("ZanyXDev");
-    QCoreApplication::setApplicationName("ePong");
-
-    QLatin1String ver_string("0.0.1-alpha");
-    int suffixIndex;
-    auto version = QVersionNumber::fromString(ver_string, &suffixIndex);
-
-    QGuiApplication app(argc, argv);
-
-    /*!
-     * \brief Make docs encourage readers to query locale right
-     * \sa https://codereview.qt-project.org/c/qt/qtdoc/+/297560
-     */
-    // create folder AppConfigLocation
-    createAppConfigFolder();
-
+double getDevicePixelRatio(){
     int density = 0;
-    bool isMobile = false;
-    /// TODO replace +android folder
-    const QUrl url(QStringLiteral("qrc:/res/qml/main.qml"));
-
 #ifdef Q_OS_ANDROID
     //  BUG with dpi on some androids: https://bugreports.qt-project.org/browse/QTBUG-35701
     // density = QtAndroid::androidActivity().callMethod<jint>("getScreenDpi");
@@ -116,35 +96,54 @@ int main(int argc, char *argv[]) {
 
 #endif
 
-    double scale = density >= 640 ? 4 :
-                                    density >= 480 ? 3 :
-                                                     density >= 320 ? 2 :
-                                                                      density >= 240 ? 1.5 : 1;
+    return   density >= 480 ? 3 :
+                              density >= 320 ? 2 :
+                                               density >= 240 ? 1.5 : 1;
+}
+
+int main(int argc, char *argv[]) {
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+    createAppConfigFolder();
+
+    QCoreApplication::setOrganizationName("ZanyXDev");
+    QCoreApplication::setApplicationName("ePong");
+    QVersionNumber v1(0,1,3);
+    QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:///");
 
 #ifdef QT_DEBUG
-    scale = 1.5;
-     qDebug() << "importPathList:" <<engine.importPathList();
-
-     QDirIterator it(":", QDirIterator::Subdirectories);
-     while (it.hasNext()) {
-         qDebug() << it.next();
-     }
-
+    qDebug() << "importPathList:" <<engine.importPathList();
+    QDirIterator it(":", QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        qDebug() << it.next();
+    }
 #endif
 
     QQmlContext *context = engine.rootContext();
-    context->setContextProperty("mm",density / 25.4);
+    context->setContextProperty("mm",getDevicePixelRatio() / 25.4);
     context->setContextProperty("pt", 1);
-    context->setContextProperty("DevicePixelRatio", scale);
-    context->setContextProperty("isMobile",isMobile);
-#ifdef QT_DEBUG
-    context->setContextProperty("isDebugMode",true );
+    context->setContextProperty("appVersion",v1.toString());
 
+#ifdef Q_OS_ANDROID
+    context->setContextProperty("isMobile",true);
+#else
+    context->setContextProperty("isMobile",false);
 #endif
 
+#ifdef QT_DEBUG
+    context->setContextProperty("isDebugMode",true );
+    context->setContextProperty("DevicePixelRatio", 1.5);
+#else
+    context->setContextProperty("isDebugMode",false );
+    context->setContextProperty("DevicePixelRatio", getDevicePixelRatio() );
+#endif
+
+    const QUrl url(QStringLiteral("qrc:/res/qml/main.qml"));
     QObject::connect(
                 &engine, &QQmlApplicationEngine::objectCreated, &app,
                 [url](QObject *obj, const QUrl &objUrl) {
