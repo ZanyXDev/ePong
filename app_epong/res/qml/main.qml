@@ -58,6 +58,8 @@ QQC2.ApplicationWindow {
         if (appInForeground) {
             if (!appInitialized) {
                 appInitialized = true
+                logoItem.opacity = 1
+                autoStartTimer.start()
             }
         } else {
             if (isDebugMode)
@@ -76,8 +78,9 @@ QQC2.ApplicationWindow {
     // ----- Visual children
     LogoItem {
         id: logoItem
-        width: parent.width * 0.9
+        width: parent.width * 0.8
         height: 126. / 346. * width
+        imageLogo: "qrc:/res/images/epong_logo.svg"
         anchors.topMargin: 30 * DevicePixelRatio
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
@@ -86,19 +89,10 @@ QQC2.ApplicationWindow {
             id: logoItemMouseArea
             anchors.fill: parent
             onClicked: {
-
-                //screen.state = "stateMainMenu"
-            }
-        }
-        onOpacityChanged: {
-            if (isDebugMode) {
-                console.log("logoItem opacity changed")
+                logoItem.opacity = 0
             }
         }
 
-        Component.onCompleted: {
-            autoStartTimer.start()
-        }
     }
     //  ----- non visual children
 
@@ -107,6 +101,17 @@ QQC2.ApplicationWindow {
         id: mSettings
         category: "BackgroundItem"
         property alias currentBgrIndex: appWnd.bgrIndex
+    }
+
+    Timer {
+        id: autoStartTimer
+        interval: AppSingleton.timer2000
+        repeat: false
+        running: logoItem.opacity > 0
+        onTriggered: {
+            logoItem.opacity = 0
+            autoStartTimer.stop()
+        }
     }
 
     // ----- JavaScript functions
