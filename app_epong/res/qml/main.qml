@@ -47,7 +47,8 @@ QQC2.ApplicationWindow {
     onScreenOrientationChanged: {
         screenOrientationUpdated(screenOrientation)
         if (isDebugMode)
-            console.log("onScreenOrientationChanged [" + screenOrientation + "]")
+            AppSingleton.toLogTrace(
+                        `onScreenOrientationChanged:[${screenOrientation}]`)
     }
     onClosing: {
         bgrIndex++
@@ -60,8 +61,8 @@ QQC2.ApplicationWindow {
             }
         } else {
             if (isDebugMode)
-                console.log("onAppInForegroundChanged-> [appInForeground:"
-                            + appInForeground + ", appInitialized:" + appInitialized + "]")
+                AppSingleton.toLog(
+                            `appInForeground: [${appInForeground} , appInitialized: ${appInitialized}]`)
         }
     }
 
