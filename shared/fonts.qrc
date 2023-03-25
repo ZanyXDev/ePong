@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>fonts/681-font.otf</file>
+        <file>fonts/mailrays.ttf</file>
     </qresource>
 </RCC>
