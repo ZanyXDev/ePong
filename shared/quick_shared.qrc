@@ -11,5 +11,6 @@
         <file alias="shine.svg">EffectsImages/shine.svg</file>
         <file>Units/qmldir</file>
         <file>Units/logo_item.qml</file>
+        <file>Units/menu_panel.qml</file>
     </qresource>
 </RCC>
