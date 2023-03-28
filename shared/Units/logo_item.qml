@@ -6,6 +6,8 @@ Item {
     id: root
     property alias imageLogo: imgLogo.source
 
+    signal timeToDie
+
     Image {
         id: imgLogo
         sourceSize {
@@ -19,12 +21,15 @@ Item {
             }
         }
     }
-    visible: opacity > 0
-
-    Behavior on opacity {
-        NumberAnimation {
-            duration: AppSingleton.timer1000
-            easing.type: Easing.InQuad
+    Timer {
+        id: autoStartTimer
+        interval: AppSingleton.timer2000
+        repeat: false
+        running: root.opacity > 0
+        onTriggered: {
+            timeToDie()
+            autoStartTimer.stop()
         }
     }
+
 }

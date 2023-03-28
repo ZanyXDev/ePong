@@ -115,16 +115,5 @@ QQC2.ApplicationWindow {
         property alias currentBgrIndex: appWnd.bgrIndex
     }
 
-    Timer {
-        id: autoStartTimer
-        interval: AppSingleton.timer2000
-        repeat: false
-        running: logoItem.opacity > 0
-        onTriggered: {
-            logoItem.opacity = 0
-            autoStartTimer.stop()
-        }
-    }
-
     // ----- JavaScript functions
 }

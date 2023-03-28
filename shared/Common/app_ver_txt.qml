@@ -11,11 +11,4 @@ Text {
         pointSize: AppSingleton.smallFontSize
         family: AppSingleton.digitalFont.name
     }
-
-    Behavior on opacity {
-        NumberAnimation {
-            duration: AppSingleton.timer200
-            easing.type: Easing.InQuad
-        }
-    }
 }
