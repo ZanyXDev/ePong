@@ -3,12 +3,13 @@
         <file>qtquickcontrols2.conf</file>
         <file>Common/qmldir</file>
         <file>Common/joystick.qml</file>
-	<file>Common/app_singleton.qml</file>
-	<file>Common/app_ver_txt.qml</file>
+        <file>Common/app_singleton.qml</file>
+        <file>Common/app_ver_txt.qml</file>
+        <file>Common/basebutton.qml</file>
         <file>AppEffects/qmldir</file>
         <file>AppEffects/shine.qml</file>
         <file alias="shine.svg">EffectsImages/shine.svg</file>
-	<file>Units/qmldir</file>
-	<file>Units/logo_item.qml</file>
+        <file>Units/qmldir</file>
+        <file>Units/logo_item.qml</file>
     </qresource>
 </RCC>
