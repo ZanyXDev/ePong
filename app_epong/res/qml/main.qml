@@ -58,8 +58,7 @@ QQC2.ApplicationWindow {
         if (appInForeground) {
             if (!appInitialized) {
                 appInitialized = true
-                logoItem.opacity = 1
-                autoStartTimer.start()
+                screen.state = "first_run"
             }
         } else {
             if (isDebugMode)
@@ -76,36 +75,88 @@ QQC2.ApplicationWindow {
     }
 
     // ----- Visual children
-    LogoItem {
-        id: logoItem
-        width: parent.width * 0.8
-        height: 126. / 346. * width
-        imageLogo: "qrc:/res/images/epong_logo.svg"
-        anchors.topMargin: 30 * DevicePixelRatio
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        z: 1
-        MouseArea {
-            id: logoItemMouseArea
-            anchors.fill: parent
-            onClicked: {
-                logoItem.opacity = 0
+    Item {
+        id: screen
+
+        anchors.fill: parent
+        LogoItem {
+            id: logoItem
+            width: parent.width * 0.8
+            height: 126. / 346. * width
+            imageLogo: "qrc:/res/images/epong_logo.svg"
+            anchors {
+                topMargin: 30 * DevicePixelRatio
+                horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
+            }
+            opacity: 0
+            z: 1
+            MouseArea {
+                id: logoItemMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    logoItem.timeToDie()
+                }
+            }
+        }
+        AppVersionTxt {
+            id: appVerText
+            text: "ver." + appVersion
+            color: "white"
+            z: 1
+            opacity: 0
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 20 * DevicePixelRatio
+                right: parent.right
+                rightMargin: 20 * DevicePixelRatio
+            }
+        }
+        states: [
+            State {
+                name: "first_run"
+                PropertyChanges {
+                    target: logoItem
+                    opacity: 1
+                }
+                PropertyChanges {
+                    target: appVerText
+                    opacity: 1
+                }
+            },
+
+            State {
+                name: "show_menu"
+                PropertyChanges {
+                    target: logoItem
+                    opacity: 0
+                }
+                PropertyChanges {
+                    target: appVerText
+                    opacity: 0
+                }
+            }
+        ]
+        transitions: [
+            Transition {
+                from: "first_run"
+                to: "*"
+                NumberAnimation {
+                    targets: [logoItem, appVerText]
+                    properties: "opacity"
+                    to: 0
+                    duration: AppSingleton.timer2000
+                    easing.type: Easing.OutCubic
+                }
+            }
+        ]
+        Connections {
+            target: logoItem
+            function onTimeToDie() {
+                screen.state = "show_menu"
             }
         }
     }
-
-    AppVersionTxt {
-        id: appVerText
-        text: "ver." + appVersion
-        color: "white"
-        z: 2
-        opacity: logoItem.opacity
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20 * DevicePixelRatio
-        anchors.right: parent.right
-        anchors.rightMargin: 20 * DevicePixelRatio
-    }
-
     //  ----- non visual children
 
     // ----- Custom non-visual children
