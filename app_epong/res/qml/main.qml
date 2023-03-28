@@ -77,7 +77,7 @@ QQC2.ApplicationWindow {
     // ----- Visual children
     Item {
         id: screen
-
+        visible: true
         anchors.fill: parent
         LogoItem {
             id: logoItem
@@ -91,6 +91,7 @@ QQC2.ApplicationWindow {
             }
             opacity: 0
             z: 1
+            visible: false
             MouseArea {
                 id: logoItemMouseArea
                 anchors.fill: parent
@@ -105,6 +106,7 @@ QQC2.ApplicationWindow {
             color: "white"
             z: 1
             opacity: 0
+            visible: false
             anchors {
                 bottom: parent.bottom
                 bottomMargin: 20 * DevicePixelRatio
@@ -112,6 +114,14 @@ QQC2.ApplicationWindow {
                 rightMargin: 20 * DevicePixelRatio
             }
         }
+        MenuPanel {
+            id: menuPanel
+            opacity: 0
+            visible: false
+            width: parent.width * 0.8
+            height: parent.height * 0.8
+        }
+
         states: [
             State {
                 name: "first_run"
@@ -123,30 +133,60 @@ QQC2.ApplicationWindow {
                     target: appVerText
                     opacity: 1
                 }
+                PropertyChanges {
+                    target: logoItem
+                    visible: true
+                }
+                PropertyChanges {
+                    target: appVerText
+                    visible: true
+                }
             },
 
             State {
                 name: "show_menu"
                 PropertyChanges {
+                    target: menuPanel
+                    opacity: 0.8
+                }
+                PropertyChanges {
+                    target: menuPanel
+                    visible: true
+                }
+                PropertyChanges {
                     target: logoItem
-                    opacity: 0
+                    visible: false
                 }
                 PropertyChanges {
                     target: appVerText
-                    opacity: 0
+                    visible: false
                 }
             }
         ]
         transitions: [
             Transition {
                 from: "first_run"
-                to: "*"
-                NumberAnimation {
-                    targets: [logoItem, appVerText]
-                    properties: "opacity"
-                    to: 0
-                    duration: AppSingleton.timer2000
-                    easing.type: Easing.OutCubic
+                to: "show_menu"
+                SequentialAnimation {
+                    NumberAnimation {
+                        targets: [logoItem, appVerText]
+                        properties: "opacity"
+                        duration: AppSingleton.timer2000
+                        easing.type: Easing.Linear
+                    }
+
+                    NumberAnimation {
+                        targets: [logoItem, appVerText, menuPanel]
+                        property: "visible"
+                        duration: 0
+                    }
+
+                    NumberAnimation {
+                        target: menuPanel
+                        properties: "opacity"
+                        duration: AppSingleton.timer2000
+                        easing.type: Easing.Linear
+                    }
                 }
             }
         ]
@@ -157,6 +197,7 @@ QQC2.ApplicationWindow {
             }
         }
     }
+
     //  ----- non visual children
 
     // ----- Custom non-visual children
