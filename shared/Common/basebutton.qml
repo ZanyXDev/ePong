@@ -20,7 +20,7 @@ QQC2.Button {
 
         horizontalOffset: 3
         verticalOffset: 4
-        radius: 5
+        radius: 5 * DevicePixelRatio
         samples: 11
         color: root.shadowColor
         opacity: 0.75
