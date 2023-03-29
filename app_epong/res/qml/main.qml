@@ -147,7 +147,7 @@ QQC2.ApplicationWindow {
                 name: "show_menu"
                 PropertyChanges {
                     target: menuPanel
-                    opacity: 0.8
+                    opacity: 0.7
                 }
                 PropertyChanges {
                     target: menuPanel
