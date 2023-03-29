@@ -1,11 +1,12 @@
 .pragma library
 
-const GameMode = {
-    "Black": 0,
-    "Blue": 1,
-    "Red": 2
+const MenuCmd = {
+    "NewGame": 0,
+    "NetworkGame": 1,
+    "Settings": 2,
+    "Records": 3,
+    "Rules": 4
 }
-
 //console.log(`getYFromIndex ${index}  is [y:${y}] position`)
 function calcRandomDuration(m_behavior_pause) {
     var rnd = 1 + Math.random() * 0.4 - 0.2
