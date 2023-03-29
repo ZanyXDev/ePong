@@ -161,6 +161,17 @@ QQC2.ApplicationWindow {
                     target: appVerText
                     visible: false
                 }
+            },
+            State {
+                name: "hide_menu"
+                PropertyChanges {
+                    target: menuPanel
+                    opacity: 0
+                }
+                PropertyChanges {
+                    target: menuPanel
+                    visible: false
+                }
             }
         ]
         transitions: [
@@ -188,12 +199,52 @@ QQC2.ApplicationWindow {
                         easing.type: Easing.Linear
                     }
                 }
+            },
+            Transition {
+
+                to: "hide_menu"
+                SequentialAnimation {
+
+                    NumberAnimation {
+                        target: menuPanel
+                        properties: "opacity"
+                        duration: AppSingleton.timer1000
+                        easing.type: Easing.Linear
+                    }
+                    NumberAnimation {
+                        targets: [menuPanel]
+                        property: "visible"
+                        duration: 0
+                    }
+                }
             }
         ]
         Connections {
             target: logoItem
             function onTimeToDie() {
                 screen.state = "show_menu"
+            }
+        }
+        Connections {
+            target: menuPanel
+            function onMenuCmd(cmd) {
+                screen.state = "hide_menu"
+
+                switch (cmd) {
+                case Utils.MenuCmd.NewGame:
+                    AppSingleton.toLog(`Command ${cmd} new game`)
+                    break
+                case Utils.MenuCmd.NetworkGame:
+                    break
+                case Utils.MenuCmd.Settings:
+                    break
+                case Utils.MenuCmd.Records:
+                    break
+                case Utils.MenuCmd.Rules:
+                    break
+                default:
+                    AppSingleton.toLog(`Command ${cmd} undefined`)
+                }
             }
         }
     }
