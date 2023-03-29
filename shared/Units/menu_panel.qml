@@ -3,9 +3,12 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as QQC2
 
 import Common 1.0
+import "qrc:/res/js/util.js" as Utils
 
 Rectangle {
     id: root
+    signal menuCmd(int cmd)
+
     anchors {
         topMargin: 20 * DevicePixelRatio
         horizontalCenter: parent.horizontalCenter
@@ -29,38 +32,43 @@ Rectangle {
         anchors.fill: parent
         spacing: 2 * DevicePixelRatio
 
+        component CmdBtn: BaseButton {
+            property int cmd_id
+            Layout.preferredWidth: 110 * DevicePixelRatio
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            onClicked: {
+                root.menuCmd(cmd_id)
+            }
+        }
+
         Item {
             Layout.fillWidth: true
             Layout.preferredHeight: 26 * DevicePixelRatio
         }
-        BaseButton {
+        CmdBtn {
             id: newGameBtn
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-
+            cmd_id: Utils.MenuCmd.NewGame
             text: qsTr("New game")
         }
-        BaseButton {
+        CmdBtn {
             id: newNetGameBtn
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-
+            enabled: false
+            cmd_id: Utils.MenuCmd.NetworkGame
             text: qsTr("Network game")
         }
-        BaseButton {
+        CmdBtn {
             id: settingsBtn
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-
+            cmd_id: Utils.MenuCmd.Settings
             text: qsTr("Settings")
         }
-        BaseButton {
+        CmdBtn {
             id: recordsBtn
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-
+            cmd_id: Utils.MenuCmd.Records
             text: qsTr("Records")
         }
-        BaseButton {
+        CmdBtn {
             id: helpBtn
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-
+            cmd_id: Utils.MenuCmd.Rules
             text: qsTr("Rules")
         }
         Item {
