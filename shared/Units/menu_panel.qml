@@ -20,9 +20,6 @@ Rectangle {
         id: demoPong
         anchors.fill: parent
         source: "qrc:/res/images/demo_pong.gif"
-    }
-
-        }
-        }
-    }
+    }    
+        
 }
