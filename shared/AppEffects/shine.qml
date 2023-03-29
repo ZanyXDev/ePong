@@ -28,16 +28,14 @@ Item {
 
     ParallelAnimation {
         running: root.visible
-        NumberAnimation {
+        RotationAnimator {
             target: firstShine
-            property: "rotation"
             to: 360
             duration: animationDuration
             loops: Animation.Infinite
         }
-        NumberAnimation {
+        RotationAnimator {
             target: secondShine
-            property: "rotation"
             to: -360
             duration: animationDuration / 2
             loops: Animation.Infinite
