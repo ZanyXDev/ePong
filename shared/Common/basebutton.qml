@@ -12,7 +12,7 @@ QQC2.Button {
 
     font {
         family: AppSingleton.gameFont.name
-        pointSize: AppSingleton.smallFontSize
+        pointSize: AppSingleton.averageFontSize
     }
 
     layer.enabled: true
