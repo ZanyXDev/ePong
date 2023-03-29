@@ -13,18 +13,16 @@ Rectangle {
         color: "darkgray"
         width: 2 * DevicePixelRatio
     }
-
     radius: 10 * DevicePixelRatio
     smooth: true
 
-    gradient: Gradient {
-        GradientStop {
-            position: 0.0
-            color: "white"
+    AnimatedImage {
+        id: demoPong
+        anchors.fill: parent
+        source: "qrc:/res/images/demo_pong.gif"
+    }
+
         }
-        GradientStop {
-            position: 1.0
-            color: "gainsboro"
         }
     }
 }
