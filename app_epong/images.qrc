@@ -38,5 +38,6 @@
         <file>res/images/backgrounds/bgr20.jpg</file>
         <file>res/images/epong.jpeg</file>
         <file>res/images/epong_logo.svg</file>
+        <file>res/images/demo_pong.gif</file>
     </qresource>
 </RCC>
