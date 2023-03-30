@@ -23,8 +23,8 @@ function getRandomBackGround() {
 }
 
 function getNextBgrImage(index) {
-
     var bgrStr
+    console.log(`index=${index}`)
     if ((index === undefined) || (index > 20) || (index < 0)) {
         index = 0
     }

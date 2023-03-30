@@ -19,7 +19,7 @@ QQC2.ApplicationWindow {
     readonly property bool appInForeground: Qt.application.state === Qt.ApplicationActive
     readonly property real winScale: Math.min(width / 1280.0, height / 720.0)
     property bool appInitialized: false
-    property int bgrIndex
+    property int bgrIndex: mSettings.currentBgrIndex
 
     // ----- Signal declarations
     signal screenOrientationUpdated(int screenOrientation)
@@ -50,8 +50,11 @@ QQC2.ApplicationWindow {
             AppSingleton.toLogTrace(
                         `onScreenOrientationChanged:[${screenOrientation}]`)
     }
-    onClosing: {
+    Component.onDestruction: {
+        AppSingleton.toLog(
+                    `onDestruction() ->bgrIndex=${bgrIndex}, mSettings.currentBgrIndex= ${mSettings.currentBgrIndex}`)
         bgrIndex++
+        mSettings.currentBgrIndex = (bgrIndex < 20) ? bgrIndex : 0
     }
 
     onAppInForegroundChanged: {
@@ -255,7 +258,7 @@ QQC2.ApplicationWindow {
     Settings {
         id: mSettings
         category: "BackgroundItem"
-        property alias currentBgrIndex: appWnd.bgrIndex
+        property int currentBgrIndex
     }
 
     // ----- JavaScript functions
