@@ -12,7 +12,7 @@
         <file alias="shine.svg">EffectsImages/shine.svg</file>
         <file>Units/qmldir</file>
         <file>Units/logo_item.qml</file>
-        <file>Units/menu_panel.qml</file>
+        <file>Units/menu_buttons.qml</file>
         <file>Units/persp_text.qml</file>
     </qresource>
 </RCC>

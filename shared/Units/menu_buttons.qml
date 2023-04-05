@@ -5,28 +5,20 @@ import QtQuick.Controls 2.15 as QQC2
 import Common 1.0
 import "qrc:/res/js/util.js" as Utils
 
-Rectangle {
+Item {
     id: root
     signal menuCmd(int cmd)
 
-    anchors {
-        topMargin: 20 * DevicePixelRatio
-        horizontalCenter: parent.horizontalCenter
-        verticalCenter: parent.verticalCenter
-    }
-    border {
-        color: "darkgray"
-        width: 2 * DevicePixelRatio
-    }
-    radius: 10 * DevicePixelRatio
-    smooth: true
-
+    //    anchors {
+    //        topMargin: 20 * DevicePixelRatio
+    //        horizontalCenter: parent.horizontalCenter
+    //        verticalCenter: parent.verticalCenter
+    //    }
     AnimatedImage {
         id: demoPong
         anchors.fill: parent
         source: "qrc:/res/images/demo_pong.gif"
     }
-
     ColumnLayout {
         id: mainMenuLayout
         anchors.fill: parent
@@ -52,7 +44,7 @@ Rectangle {
         }
         CmdBtn {
             id: newNetGameBtn
-            enabled: false
+            enabled: true
             cmd_id: Utils.MenuCmd.NetworkGame
             text: qsTr("Network game")
         }
