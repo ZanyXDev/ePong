@@ -32,7 +32,7 @@ QtObject {
 
     function toLogTrace(msg) {
         console.trace()
-        toLog(`${msg}`)
+        toLog(msg)
     }
 
     function toLog(msg) {
