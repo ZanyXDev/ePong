@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 
 import Common 1.0
 import "qrc:/res/js/util.js" as Utils
@@ -8,6 +8,8 @@ import "qrc:/res/js/util.js" as Utils
 Item {
     id: root
     property Component inlineContent: ContentItem {}
+    property bool rounded: true
+    property bool adapt: true
 
     component ContentItem: Item {}
 
@@ -16,20 +18,24 @@ Item {
         verticalCenter: parent.verticalCenter
     }
 
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        border {
-            color: "darkgray"
-            width: 2 * DevicePixelRatio
+    smooth: true
+
+    opacity: 0.8
+
+    layer.enabled: root.rounded
+    layer.effect: OpacityMask {
+        maskSource: Item {
+            width: background.width
+            height: background.height
+            Rectangle {
+
+                width: root.adapt ? background.width : Math.min(
+                                        background.width, background.height)
+                height: root.adapt ? background.height : width
+                radius: 10 * DevicePixelRatio
+            }
         }
-
-        radius: 10 * DevicePixelRatio
-        smooth: true
-        color: "black"
-        opacity: 0.7
     }
-
     Loader {
         id: loader
         anchors.fill: parent
