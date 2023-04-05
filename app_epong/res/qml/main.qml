@@ -117,12 +117,47 @@ QQC2.ApplicationWindow {
                 rightMargin: 20 * DevicePixelRatio
             }
         }
-        MenuPanel {
+
+        RoundPanel {
             id: menuPanel
-            opacity: 0
             visible: false
-            width: parent.width * 0.8
-            height: parent.height * 0.8
+            width: parent.width * 0.9
+            height: parent.height * 0.9
+            inlineContent: MenuButtons {
+                id: menuButtons
+                anchors.fill: parent
+
+                Rectangle {
+                    id: borderRect
+                    anchors.fill: parent
+                    border {
+                        color: "darkgray"
+                        width: 2 * DevicePixelRatio
+                    }
+                    color: "transparent"
+                    radius: 10 * DevicePixelRatio
+                }
+                onMenuCmd: {
+                    AppSingleton.toLog(`Command ${cmd} recived`)
+                    screen.state = "hide_menu"
+
+                    switch (cmd) {
+                    case Utils.MenuCmd.NewGame:
+                        AppSingleton.toLog(`Command ${cmd} new game`)
+                        break
+                    case Utils.MenuCmd.NetworkGame:
+                        break
+                    case Utils.MenuCmd.Settings:
+                        break
+                    case Utils.MenuCmd.Records:
+                        break
+                    case Utils.MenuCmd.Rules:
+                        break
+                    default:
+                        AppSingleton.toLog(`Command ${cmd} undefined`)
+                    }
+                }
+            }
         }
 
         states: [
@@ -204,10 +239,8 @@ QQC2.ApplicationWindow {
                 }
             },
             Transition {
-
                 to: "hide_menu"
                 SequentialAnimation {
-
                     NumberAnimation {
                         target: menuPanel
                         properties: "opacity"
@@ -226,28 +259,6 @@ QQC2.ApplicationWindow {
             target: logoItem
             function onTimeToDie() {
                 screen.state = "show_menu"
-            }
-        }
-        Connections {
-            target: menuPanel
-            function onMenuCmd(cmd) {
-                screen.state = "hide_menu"
-
-                switch (cmd) {
-                case Utils.MenuCmd.NewGame:
-                    AppSingleton.toLog(`Command ${cmd} new game`)
-                    break
-                case Utils.MenuCmd.NetworkGame:
-                    break
-                case Utils.MenuCmd.Settings:
-                    break
-                case Utils.MenuCmd.Records:
-                    break
-                case Utils.MenuCmd.Rules:
-                    break
-                default:
-                    AppSingleton.toLog(`Command ${cmd} undefined`)
-                }
             }
         }
     }
