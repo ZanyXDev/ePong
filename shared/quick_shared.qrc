@@ -6,6 +6,7 @@
         <file>Common/app_singleton.qml</file>
         <file>Common/app_ver_txt.qml</file>
         <file>Common/basebutton.qml</file>
+        <file>Common/round_panel.qml</file>
         <file>AppEffects/qmldir</file>
         <file>AppEffects/shine.qml</file>
         <file alias="shine.svg">EffectsImages/shine.svg</file>
@@ -13,6 +14,5 @@
         <file>Units/logo_item.qml</file>
         <file>Units/menu_panel.qml</file>
         <file>Units/persp_text.qml</file>
-        <file>Common/base_panel.qml</file>
     </qresource>
 </RCC>
