@@ -19,7 +19,7 @@ QQC2.ApplicationWindow {
     readonly property bool appInForeground: Qt.application.state === Qt.ApplicationActive
     readonly property real winScale: Math.min(width / 1280.0, height / 720.0)
     property bool appInitialized: false
-    property int bgrIndex
+    property int bgrIndex: mSettings.currentBgrIndex
 
     // ----- Signal declarations
     signal screenOrientationUpdated(int screenOrientation)
@@ -50,16 +50,18 @@ QQC2.ApplicationWindow {
             AppSingleton.toLogTrace(
                         `onScreenOrientationChanged:[${screenOrientation}]`)
     }
-    onClosing: {
+    Component.onDestruction: {
+        AppSingleton.toLog(
+                    `onDestruction() ->bgrIndex=${bgrIndex}, mSettings.currentBgrIndex= ${mSettings.currentBgrIndex}`)
         bgrIndex++
+        mSettings.currentBgrIndex = (bgrIndex < 20) ? bgrIndex : 0
     }
 
     onAppInForegroundChanged: {
         if (appInForeground) {
             if (!appInitialized) {
                 appInitialized = true
-                logoItem.opacity = 1
-                autoStartTimer.start()
+                screen.state = "first_run"
             }
         } else {
             if (isDebugMode)
@@ -76,34 +78,189 @@ QQC2.ApplicationWindow {
     }
 
     // ----- Visual children
-    LogoItem {
-        id: logoItem
-        width: parent.width * 0.8
-        height: 126. / 346. * width
-        imageLogo: "qrc:/res/images/epong_logo.svg"
-        anchors.topMargin: 30 * DevicePixelRatio
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        z: 1
-        MouseArea {
-            id: logoItemMouseArea
-            anchors.fill: parent
-            onClicked: {
-                logoItem.opacity = 0
+    Item {
+        id: screen
+        visible: true
+        anchors.fill: parent
+        LogoItem {
+            id: logoItem
+            width: parent.width * 0.8
+            height: 126. / 346. * width
+            imageLogo: "qrc:/res/images/epong_logo.svg"
+            anchors {
+                topMargin: 30 * DevicePixelRatio
+                horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
+            }
+            opacity: 0
+            z: 1
+            visible: false
+            MouseArea {
+                id: logoItemMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    logoItem.timeToDie()
+                }
             }
         }
-    }
+        AppVersionTxt {
+            id: appVerText
+            text: "ver." + appVersion
+            color: "white"
+            z: 1
+            opacity: 0
+            visible: false
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 20 * DevicePixelRatio
+                right: parent.right
+                rightMargin: 20 * DevicePixelRatio
+            }
+        }
 
-    AppVersionTxt {
-        id: appVerText
-        text: "ver." + appVersion
-        color: "white"
-        z: 2
-        opacity: logoItem.opacity
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20 * DevicePixelRatio
-        anchors.right: parent.right
-        anchors.rightMargin: 20 * DevicePixelRatio
+        RoundPanel {
+            id: menuPanel
+            visible: false
+            width: parent.width * 0.9
+            height: parent.height * 0.9
+            inlineContent: MenuButtons {
+                id: menuButtons
+                anchors.fill: parent
+
+                Rectangle {
+                    id: borderRect
+                    anchors.fill: parent
+                    border {
+                        color: "darkgray"
+                        width: 2 * DevicePixelRatio
+                    }
+                    color: "transparent"
+                    radius: 10 * DevicePixelRatio
+                }
+                onMenuCmd: {
+                    AppSingleton.toLog(`Command ${cmd} recived`)
+                    screen.state = "hide_menu"
+
+                    switch (cmd) {
+                    case Utils.MenuCmd.NewGame:
+                        AppSingleton.toLog(`Command ${cmd} new game`)
+                        break
+                    case Utils.MenuCmd.NetworkGame:
+                        break
+                    case Utils.MenuCmd.Settings:
+                        break
+                    case Utils.MenuCmd.Records:
+                        break
+                    case Utils.MenuCmd.Rules:
+                        break
+                    default:
+                        AppSingleton.toLog(`Command ${cmd} undefined`)
+                    }
+                }
+            }
+        }
+
+        states: [
+            State {
+                name: "first_run"
+                PropertyChanges {
+                    target: logoItem
+                    opacity: 1
+                }
+                PropertyChanges {
+                    target: appVerText
+                    opacity: 1
+                }
+                PropertyChanges {
+                    target: logoItem
+                    visible: true
+                }
+                PropertyChanges {
+                    target: appVerText
+                    visible: true
+                }
+            },
+
+            State {
+                name: "show_menu"
+                PropertyChanges {
+                    target: menuPanel
+                    opacity: 0.7
+                }
+                PropertyChanges {
+                    target: menuPanel
+                    visible: true
+                }
+                PropertyChanges {
+                    target: logoItem
+                    visible: false
+                }
+                PropertyChanges {
+                    target: appVerText
+                    visible: false
+                }
+            },
+            State {
+                name: "hide_menu"
+                PropertyChanges {
+                    target: menuPanel
+                    opacity: 0
+                }
+                PropertyChanges {
+                    target: menuPanel
+                    visible: false
+                }
+            }
+        ]
+        transitions: [
+            Transition {
+                from: "first_run"
+                to: "show_menu"
+                SequentialAnimation {
+                    NumberAnimation {
+                        targets: [logoItem, appVerText]
+                        properties: "opacity"
+                        duration: AppSingleton.timer2000
+                        easing.type: Easing.Linear
+                    }
+
+                    NumberAnimation {
+                        targets: [logoItem, appVerText, menuPanel]
+                        property: "visible"
+                        duration: 0
+                    }
+
+                    NumberAnimation {
+                        target: menuPanel
+                        properties: "opacity"
+                        duration: AppSingleton.timer2000
+                        easing.type: Easing.Linear
+                    }
+                }
+            },
+            Transition {
+                to: "hide_menu"
+                SequentialAnimation {
+                    NumberAnimation {
+                        target: menuPanel
+                        properties: "opacity"
+                        duration: AppSingleton.timer1000
+                        easing.type: Easing.Linear
+                    }
+                    NumberAnimation {
+                        targets: [menuPanel]
+                        property: "visible"
+                        duration: 0
+                    }
+                }
+            }
+        ]
+        Connections {
+            target: logoItem
+            function onTimeToDie() {
+                screen.state = "show_menu"
+            }
+        }
     }
 
     //  ----- non visual children
@@ -112,18 +269,7 @@ QQC2.ApplicationWindow {
     Settings {
         id: mSettings
         category: "BackgroundItem"
-        property alias currentBgrIndex: appWnd.bgrIndex
-    }
-
-    Timer {
-        id: autoStartTimer
-        interval: AppSingleton.timer2000
-        repeat: false
-        running: logoItem.opacity > 0
-        onTriggered: {
-            logoItem.opacity = 0
-            autoStartTimer.stop()
-        }
+        property int currentBgrIndex
     }
 
     // ----- JavaScript functions

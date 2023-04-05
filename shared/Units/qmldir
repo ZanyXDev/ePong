@@ -1,2 +1,3 @@
 module Units
 LogoItem 1.0 logo_item.qml
+MenuButtons 1.0 menu_buttons.qml

@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>fonts/681-font.otf</file>
         <file>fonts/mailrays.ttf</file>
+        <file>fonts/nasalization-rg.otf</file>
     </qresource>
 </RCC>
