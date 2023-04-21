@@ -82,6 +82,7 @@ QQC2.ApplicationWindow {
         id: screen
         visible: true
         anchors.fill: parent
+
         LogoItem {
             id: logoItem
             width: parent.width * 0.8
@@ -117,10 +118,10 @@ QQC2.ApplicationWindow {
                 rightMargin: 20 * DevicePixelRatio
             }
         }
-
         RoundPanel {
             id: menuPanel
             visible: false
+            opacity: 0
             width: parent.width * 0.9
             height: parent.height * 0.9
             inlineContent: MenuButtons {
@@ -128,7 +129,7 @@ QQC2.ApplicationWindow {
                 anchors.fill: parent
 
                 Rectangle {
-                    id: borderRect
+                    id: borderRectMenu
                     anchors.fill: parent
                     border {
                         color: "darkgray"
@@ -159,7 +160,26 @@ QQC2.ApplicationWindow {
                 }
             }
         }
+        RoundPanel {
+            id: rulesPanel
+            visible: false
+            width: parent.width * 0.9
+            height: parent.height * 0.9
+            inlineContent: Item {
+                anchors.fill: parent
 
+                Rectangle {
+                    id: borderRectRules
+                    anchors.fill: parent
+                    border {
+                        color: "darkgray"
+                        width: 2 * DevicePixelRatio
+                    }
+                    color: "transparent"
+                    radius: 10 * DevicePixelRatio
+                }
+            }
+        }
         states: [
             State {
                 name: "first_run"
@@ -180,16 +200,15 @@ QQC2.ApplicationWindow {
                     visible: true
                 }
             },
-
             State {
-                name: "show_menu"
+                name: "hide_logo"
                 PropertyChanges {
-                    target: menuPanel
-                    opacity: 0.7
+                    target: logoItem
+                    opacity: 0
                 }
                 PropertyChanges {
-                    target: menuPanel
-                    visible: true
+                    target: appVerText
+                    opacity: 0
                 }
                 PropertyChanges {
                     target: logoItem
@@ -201,21 +220,59 @@ QQC2.ApplicationWindow {
                 }
             },
             State {
+                name: "show_menu"
+                PropertyChanges {
+                    target: menuPanel
+                    visible: true
+                }
+                PropertyChanges {
+                    target: menuPanel
+                    opacity: 0.7
+                }
+            },
+            State {
                 name: "hide_menu"
+
+                PropertyChanges {
+                    target: menuPanel
+                    visible: false
+                }
                 PropertyChanges {
                     target: menuPanel
                     opacity: 0
                 }
+            },
+            State {
+                name: "show_rules"
                 PropertyChanges {
-                    target: menuPanel
-                    visible: false
+                    target: rulesPanel
+                    opacity: 0.7
+                }
+                PropertyChanges {
+                    target: rulesPanel
+                    visible: true
                 }
             }
         ]
         transitions: [
             Transition {
-                from: "first_run"
-                to: "show_menu"
+                to: "first_run"
+                SequentialAnimation {
+                    NumberAnimation {
+                        targets: [logoItem, appVerText]
+                        property: "visible"
+                        duration: 0
+                    }
+                    NumberAnimation {
+                        targets: [logoItem, appVerText]
+                        properties: "opacity"
+                        duration: AppSingleton.timer2000
+                        easing.type: Easing.Linear
+                    }
+                }
+            },
+            Transition {
+                to: "hide_logo"
                 SequentialAnimation {
                     NumberAnimation {
                         targets: [logoItem, appVerText]
@@ -223,13 +280,22 @@ QQC2.ApplicationWindow {
                         duration: AppSingleton.timer2000
                         easing.type: Easing.Linear
                     }
-
                     NumberAnimation {
-                        targets: [logoItem, appVerText, menuPanel]
+                        targets: [logoItem, appVerText]
                         property: "visible"
                         duration: 0
                     }
+                }
+            },
+            Transition {
+                to: "show_menu"
+                SequentialAnimation {
 
+                    NumberAnimation {
+                        target: menuPanel
+                        property: "visible"
+                        duration: 0
+                    }
                     NumberAnimation {
                         target: menuPanel
                         properties: "opacity"
@@ -253,11 +319,19 @@ QQC2.ApplicationWindow {
                         duration: 0
                     }
                 }
+            },
+            Transition {
+                from: "hide_logo"
+                to: "show_menu"
+                PauseAnimation {
+                    duration: AppSingleton.timer1000
+                }
             }
         ]
         Connections {
             target: logoItem
             function onTimeToDie() {
+                screen.state = "hide_logo"
                 screen.state = "show_menu"
             }
         }
