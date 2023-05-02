@@ -14,5 +14,6 @@
         <file>Units/logo_item.qml</file>
         <file>Units/menu_buttons.qml</file>
         <file>Units/persp_text.qml</file>
+        <file>Common/screen_page.qml</file>
     </qresource>
 </RCC>
