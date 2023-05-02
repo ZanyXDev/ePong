@@ -31,5 +31,11 @@ Item {
             autoStartTimer.stop()
         }
     }
-
+    MouseArea {
+        id: logoItemMouseArea
+        anchors.fill: parent
+        onClicked: {
+            root.timeToDie()
+        }
+    }
 }

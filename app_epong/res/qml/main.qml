@@ -96,13 +96,6 @@ QQC2.ApplicationWindow {
             opacity: 0
             z: 1
             visible: false
-            MouseArea {
-                id: logoItemMouseArea
-                anchors.fill: parent
-                onClicked: {
-                    logoItem.timeToDie()
-                }
-            }
         }
         AppVersionTxt {
             id: appVerText
