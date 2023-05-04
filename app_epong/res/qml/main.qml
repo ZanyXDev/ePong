@@ -7,6 +7,7 @@ import Qt.labs.settings 1.0
 
 import Common 1.0
 import Units 1.0
+import Pages 1.0
 
 import "qrc:/res/js/util.js" as Utils
 
