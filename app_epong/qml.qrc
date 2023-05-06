@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>res/qml/main.qml</file>
-        <file alias="Pages/qmldir">res/qml/Pages/qmldir</file>
-        <file alias="Pages/splash_page.qml">res/qml/Pages/splash_page.qml</file>
     </qresource>
 </RCC>

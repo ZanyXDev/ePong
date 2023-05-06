@@ -17,6 +17,7 @@
 
 #ifdef QT_DEBUG
 #include <QDirIterator>
+#include <QLoggingCategory>
 #endif
 
 /*!
@@ -127,7 +128,7 @@ int main(int argc, char *argv[]) {
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("mm",getDevicePixelRatio() / 25.4);
     context->setContextProperty("pt", 1);
-    context->setContextProperty("appVersion",v1.toString());
+    context->setContextProperty("AppVersion",v1.toString());
 
 #ifdef Q_OS_ANDROID
     context->setContextProperty("isMobile",true);
@@ -138,6 +139,7 @@ int main(int argc, char *argv[]) {
 #ifdef QT_DEBUG
     context->setContextProperty("isDebugMode",true );
     context->setContextProperty("DevicePixelRatio", 1.5);
+    QLoggingCategory::setFilterRules(QStringLiteral("qt.qml.binding.removal.info=true"));
 #else
     context->setContextProperty("isDebugMode",false );
     context->setContextProperty("DevicePixelRatio", getDevicePixelRatio() );
