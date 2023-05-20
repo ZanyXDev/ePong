@@ -15,6 +15,7 @@
         <file>Units/menu_buttons.qml</file>
         <file>Units/persp_text.qml</file>
         <file>Pages/qmldir</file>
-        <file>Pages/splash_page.qml</file>
+        <file>Pages/init_page.qml</file>
+        <file>Pages/test_page.qml</file>
     </qresource>
 </RCC>
