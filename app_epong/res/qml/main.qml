@@ -12,113 +12,161 @@ import Pages 1.0
 import "qrc:/res/js/util.js" as Utils
 
 QQC2.ApplicationWindow {
-    id: appWnd
-    // ----- Property Declarations
+  id: appWnd
+  // ----- Property Declarations
 
-    // Required properties should be at the top.
-    readonly property int screenOrientation: Screen.orientation
-    readonly property bool appInForeground: Qt.application.state === Qt.ApplicationActive
-    readonly property real winScale: Math.min(width / 1280.0, height / 720.0)
-    property bool appInitialized: false
+  // Required properties should be at the top.
+  readonly property int screenOrientation: Screen.orientation
+  readonly property bool appInForeground: Qt.application.state === Qt.ApplicationActive
+  readonly property real winScale: Math.min(width / 1280.0, height / 720.0)
+  property bool appInitialized: false
 
-    // ----- Signal declarations
-    signal screenOrientationUpdated(int screenOrientation)
+  // ----- Signal declarations
+  signal screenOrientationUpdated(int screenOrientation)
 
-    // ----- Size information
-    width: (screenOrientation == Qt.PortraitOrientation) ? 320 * DevicePixelRatio : 480
-                                                           * DevicePixelRatio
-    height: (screenOrientation == Qt.PortraitOrientation) ? 480 * DevicePixelRatio : 320
-                                                            * DevicePixelRatio
-    maximumHeight: height
-    maximumWidth: width
+  // ----- Size information
+  width: (screenOrientation == Qt.PortraitOrientation) ? 320 * DevicePixelRatio : 480
+                                                         * DevicePixelRatio
+  height: (screenOrientation == Qt.PortraitOrientation) ? 480 * DevicePixelRatio : 320
+                                                          * DevicePixelRatio
+  maximumHeight: height
+  maximumWidth: width
 
-    minimumHeight: height
-    minimumWidth: width
-    // ----- Then comes the other properties. There's no predefined order to these.
-    visible: true
-    visibility: (isMobile) ? Window.FullScreen : Window.Windowed
-    flags: Qt.Dialog
-    title: qsTr(" ")
-    Screen.orientationUpdateMask: Qt.LandscapeOrientation
+  minimumHeight: height
+  minimumWidth: width
+  // ----- Then comes the other properties. There's no predefined order to these.
+  visible: true
+  visibility: (isMobile) ? Window.FullScreen : Window.Windowed
+  flags: Qt.Dialog
+  title: qsTr(" ")
+  Screen.orientationUpdateMask: Qt.LandscapeOrientation
 
-    // ----- Then attached properties and attached signal handlers.
+  // ----- Then attached properties and attached signal handlers.
 
-    // ----- Signal handlers
-    onScreenOrientationChanged: {
-        screenOrientationUpdated(screenOrientation)
-        if (isDebugMode)
-            AppSingleton.toLogTrace(
-                        `onScreenOrientationChanged:[${screenOrientation}]`)
+  // ----- Signal handlers
+  onScreenOrientationChanged: {
+    screenOrientationUpdated(screenOrientation)
+    if (isDebugMode)
+      AppSingleton.toLogTrace(
+            `onScreenOrientationChanged:[${screenOrientation}]`)
+  }
+  Component.onDestruction: {
+    var bgrIndex = mSettings.currentBgrIndex
+    bgrIndex++
+    mSettings.currentBgrIndex = (bgrIndex < 20) ? bgrIndex : 0
+  }
+  onAppInForegroundChanged: {
+    if (appInForeground) {
+      if (!appInitialized) {
+        appInitialized = true
+        screen.state = "first_run"
+      }
+    } else {
+      if (isDebugMode)
+        AppSingleton.toLog(
+              `appInForeground: [${appInForeground} , appInitialized: ${appInitialized}]`)
     }
-    Component.onDestruction: {
-        var bgrIndex = mSettings.currentBgrIndex
-        bgrIndex++
-        mSettings.currentBgrIndex = (bgrIndex < 20) ? bgrIndex : 0
-    }
-    onAppInForegroundChanged: {
-        if (appInForeground) {
-            if (!appInitialized) {
-                appInitialized = true
-                screen.state = "first_run"
-            }
-        } else {
-            if (isDebugMode)
-                AppSingleton.toLog(
-                            `appInForeground: [${appInForeground} , appInitialized: ${appInitialized}]`)
-        }
-    }
+  }
 
-    background: Image {
-        id: background
-        anchors.fill: parent
-        source: Utils.getNextBgrImage(mSettings.currentBgrIndex)
-        fillMode: Image.PreserveAspectCrop
-    }
+  background: Image {
+    id: background
+    anchors.fill: parent
+    source: Utils.getNextBgrImage(mSettings.currentBgrIndex)
+    fillMode: Image.PreserveAspectCrop
+  }
 
-    // ----- Visual children
-    QQC2.SwipeView {
-        id: swipeView
-        anchors.fill: parent
-        interactive: (isDebugMode) ? true : false
+  // ----- Visual children
+  QQC2.StackView {
+    id: stackView
+    property real offset: 10
+    anchors.fill: parent
 
-        onCurrentIndexChanged: {
-            AppSingleton.toLog(
-                        `SwipeView.currentIndex: [${swipeView.currentIndex}]`)
-        }
-
-        SplashPage {
-            id: splashPage
-        }
-
-        Rectangle {
-            id: debugRect
-            border.color: "#ff0000"
-            color: "#ffffff"
-            opacity: 0.8
-            visible: true
-        }
-        Component.onCompleted: {
-            AppSingleton.toLog(
-                        `SwipeView.interactive: [${swipeView.interactive} ]`)
-        }
-        Connections {
-            target: splashPage
-            function onShowNextPage() {
-                swipeView.incrementCurrentIndex()
-                AppSingleton.toLog(
-                            `swipeView: [ recive signal showNextPage()] do increment page`)
-            }
-        }
+    initialItem: InitPage {
+      onLaunched: {
+        stackView.push(page)
+      }
     }
 
-    //  ----- non visual children
-
-    // ----- Custom non-visual children
-    Settings {
-        id: mSettings
-        category: "BackgroundItem"
-        property int currentBgrIndex
+    /**
+    pushEnter: Transition {
+      id: pushEnter
+      ParallelAnimation {
+        PropertyAction {
+          property: "x"
+          value: pushEnter.ViewTransition.item.pos
+        }
+        NumberAnimation {
+          properties: "y"
+          from: pushEnter.ViewTransition.item.pos + stackView.offset
+          to: pushEnter.ViewTransition.item.pos
+          duration: 400
+          easing.type: Easing.OutCubic
+        }
+        NumberAnimation {
+          property: "opacity"
+          from: 0
+          to: 1
+          duration: 400
+          easing.type: Easing.OutCubic
+        }
+      }
     }
+    popExit: Transition {
+      id: popExit
+      ParallelAnimation {
+        PropertyAction {
+          property: "x"
+          value: popExit.ViewTransition.item.pos
+        }
+        NumberAnimation {
+          properties: "y"
+          from: popExit.ViewTransition.item.pos
+          to: popExit.ViewTransition.item.pos + stackView.offset
+          duration: 400
+          easing.type: Easing.OutCubic
+        }
+        NumberAnimation {
+          property: "opacity"
+          from: 1
+          to: 0
+          duration: 400
+          easing.type: Easing.OutCubic
+        }
+      }
+    }
+    pushExit: Transition {
+      id: pushExit
+      PropertyAction {
+        property: "x"
+        value: pushExit.ViewTransition.item.pos
+      }
+      PropertyAction {
+        property: "y"
+        value: pushExit.ViewTransition.item.pos
+      }
+    }
+    popEnter: Transition {
+      id: popEnter
+      PropertyAction {
+        property: "x"
+        value: popEnter.ViewTransition.item.pos
+      }
+      PropertyAction {
+        property: "y"
+        value: popEnter.ViewTransition.item.pos
+      }
+    }
+*/
+  }
 
-    // ----- JavaScript functions
+  //  ----- non visual children
+
+  // ----- Custom non-visual children
+  Settings {
+    id: mSettings
+    category: "BackgroundItem"
+    property int currentBgrIndex
+  }
+
+  // ----- JavaScript functions
 }
