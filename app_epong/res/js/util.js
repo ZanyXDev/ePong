@@ -4,7 +4,7 @@ const MenuCmd = {
   "NewGame": 0,
   "NetworkGame": 1,
   "Settings": 2,
-  "LeaderBorads": 3,
+  "LeaderBoards": 3,
   "Rules": 4
 }
 //console.log(`getYFromIndex ${index}  is [y:${y}] position`)
