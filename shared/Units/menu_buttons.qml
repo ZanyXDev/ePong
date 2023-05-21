@@ -8,7 +8,7 @@ import "qrc:/res/js/util.js" as Utils
 Item {
   id: root
   signal menuCmd(int cmd)
-
+  property alias demoPaused: demoPong.paused
   AnimatedImage {
     id: demoPong
     anchors.fill: parent

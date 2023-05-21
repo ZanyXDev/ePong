@@ -93,7 +93,8 @@ QQC2.ApplicationWindow {
   Component {
     id: menuPage
     MenuButtons {
-
+      id: menuButtons
+      demoPaused: popup.visible
       onMenuCmd: {
 
         switch (cmd) {
