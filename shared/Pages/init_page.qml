@@ -8,14 +8,20 @@ QQC2.Page {
 
   // ----- Property Declarations
   // Required properties should be at the top.
-
+  property bool firstRun: false
   // ----- Signal declarations
-  signal launched(string page)
+  signal showGameMenu
   // ----- Size information
   // ----- Then comes the other properties. There's no predefined order to these.
   QQC2.StackView.onActivated: {
-    AppSingleton.toLog(`InitPage.onActivated`)
-    showAnimation.start()
+    AppSingleton.toLog(`InitPage.onActivated firstRun ${firstRun}`)
+    if (!firstRun) {
+      showAnimation.start()
+      firstRun = true
+      autoStartTimer.start()
+    } else {
+      root.showGameMenu()
+    }
   }
 
   // ----- Visual children.
@@ -62,6 +68,17 @@ QQC2.Page {
     }
   }
 
+  Timer {
+    id: autoStartTimer
+    interval: AppSingleton.timer2000
+    repeat: false
+    running: false
+    onTriggered: {
+      AppSingleton.toLog(`autoStartTimer onTriggered`)
+      autoStartTimer.stop()
+      hideAnimation.start()
+    }
+  }
   SequentialAnimation {
     id: showAnimation
     PropertyAction {
@@ -95,7 +112,7 @@ QQC2.Page {
       value: false
     }
     ScriptAction {
-      script: root.launched(Qt.resolvedUrl("qrc:/Pages/test_page.qml"))
+      script: root.showGameMenu()
     }
   }
 }

@@ -21,22 +21,12 @@ Item {
       }
     }
   }
-  Timer {
-    id: autoStartTimer
-    interval: AppSingleton.timer2000
-    repeat: false
-    running: root.opacity > 0
-    onTriggered: {
-      root.timeToDie()
-      autoStartTimer.stop()
-    }
-  }
+
   MouseArea {
     id: logoItemMouseArea
     anchors.fill: parent
     onClicked: {
       root.timeToDie()
-      autoStartTimer.stop()
     }
   }
 }
