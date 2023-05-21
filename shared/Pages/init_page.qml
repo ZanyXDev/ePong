@@ -58,7 +58,6 @@ QQC2.Page {
     target: logoItem
     function onTimeToDie() {
       hideAnimation.start()
-
       AppSingleton.toLog(`InitPage.onTimeToDie`)
     }
   }
