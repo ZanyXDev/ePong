@@ -7,6 +7,7 @@
         <file>Common/app_ver_txt.qml</file>
         <file>Common/basebutton.qml</file>
         <file>Common/round_panel.qml</file>
+	<file>Common/round_image.qml</file>
         <file>AppEffects/qmldir</file>
         <file>AppEffects/shine.qml</file>
         <file alias="shine.svg">EffectsImages/shine.svg</file>
