@@ -49,9 +49,9 @@ Item {
       text: qsTr("Settings")
     }
     CmdBtn {
-      id: recordsBtn
-      cmd_id: Utils.MenuCmd.Records
-      text: qsTr("Records")
+      id: leaderBoradsBtn
+      cmd_id: Utils.MenuCmd.LeaderBoards
+      text: qsTr("LeaderBoards")
     }
     CmdBtn {
       id: helpBtn

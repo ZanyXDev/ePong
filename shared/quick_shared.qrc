@@ -18,5 +18,6 @@
         <file>Pages/qmldir</file>
         <file>Pages/init_page.qml</file>
         <file>Pages/test_page.qml</file>
+        <file>Pages/lb_page.qml</file>
     </qresource>
 </RCC>
