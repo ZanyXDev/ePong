@@ -78,88 +78,77 @@ QQC2.ApplicationWindow {
   // ----- Visual children
   QQC2.StackView {
     id: stackView
-    property real offset: 10
     anchors.fill: parent
 
     initialItem: InitPage {
-      onLaunched: {
-        stackView.push(page)
+      onShowGameMenu: {
+        stackView.push(menuPage)
       }
     }
-
-    /**
-    pushEnter: Transition {
-      id: pushEnter
-      ParallelAnimation {
-        PropertyAction {
-          property: "x"
-          value: pushEnter.ViewTransition.item.pos
-        }
-        NumberAnimation {
-          properties: "y"
-          from: pushEnter.ViewTransition.item.pos + stackView.offset
-          to: pushEnter.ViewTransition.item.pos
-          duration: 400
-          easing.type: Easing.OutCubic
-        }
-        NumberAnimation {
-          property: "opacity"
-          from: 0
-          to: 1
-          duration: 400
-          easing.type: Easing.OutCubic
-        }
-      }
-    }
-    popExit: Transition {
-      id: popExit
-      ParallelAnimation {
-        PropertyAction {
-          property: "x"
-          value: popExit.ViewTransition.item.pos
-        }
-        NumberAnimation {
-          properties: "y"
-          from: popExit.ViewTransition.item.pos
-          to: popExit.ViewTransition.item.pos + stackView.offset
-          duration: 400
-          easing.type: Easing.OutCubic
-        }
-        NumberAnimation {
-          property: "opacity"
-          from: 1
-          to: 0
-          duration: 400
-          easing.type: Easing.OutCubic
-        }
-      }
-    }
-    pushExit: Transition {
-      id: pushExit
-      PropertyAction {
-        property: "x"
-        value: pushExit.ViewTransition.item.pos
-      }
-      PropertyAction {
-        property: "y"
-        value: pushExit.ViewTransition.item.pos
-      }
-    }
-    popEnter: Transition {
-      id: popEnter
-      PropertyAction {
-        property: "x"
-        value: popEnter.ViewTransition.item.pos
-      }
-      PropertyAction {
-        property: "y"
-        value: popEnter.ViewTransition.item.pos
-      }
-    }
-*/
+    pushEnter: pushEnterTransition
+    popEnter: popEnterTransition
+    popExit: popExitTransition
   }
 
+  Component {
+    id: menuPage
+    MenuButtons {
+
+      onMenuCmd: {
+
+        switch (cmd) {
+        case Utils.MenuCmd.NewGame:
+          stackView.pop()
+          break
+        case Utils.MenuCmd.NetworkGame:
+
+          break
+        default:
+          AppSingleton.toLog(`Recive cmd ${cmd}`)
+          break
+        }
+      }
+    }
+  }
   //  ----- non visual children
+  Transition {
+    id: pushEnterTransition
+    ParallelAnimation {
+      PropertyAnimation {
+        property: "opacity"
+        from: 0
+        to: 1
+        duration: 400
+        easing.type: Easing.InOutCubic
+      }
+      XAnimator {
+        from: (stackView.mirrored ? -1 : 1) * -stackView.width
+        to: 0
+        duration: 400
+        easing.type: Easing.OutCubic
+      }
+    }
+  }
+
+  Transition {
+    id: popEnterTransition
+    XAnimator {
+      from: (stackView.mirrored ? -1 : 1) * -stackView.width
+      to: 0
+      duration: 400
+      easing.type: Easing.OutCubic
+    }
+  }
+
+  Transition {
+    id: popExitTransition
+    XAnimator {
+      from: 0
+      to: (stackView.mirrored ? -1 : 1) * stackView.width
+      duration: 400
+      easing.type: Easing.OutCubic
+    }
+  }
 
   // ----- Custom non-visual children
   Settings {
