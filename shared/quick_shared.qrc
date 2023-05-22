@@ -10,7 +10,6 @@
         <file>Common/round_image.qml</file>
         <file>AppEffects/qmldir</file>
         <file>AppEffects/shine.qml</file>
-        <file alias="shine.svg">EffectsImages/shine.svg</file>
         <file>Units/qmldir</file>
         <file>Units/logo_item.qml</file>
         <file>Units/menu_buttons.qml</file>

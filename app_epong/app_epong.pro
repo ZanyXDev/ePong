@@ -15,7 +15,7 @@ CONFIG(release,debug|release):CONFIG += qtquickcompiler # Qt Quick compiler
 CONFIG(release,debug|release):CONFIG += add_source_task # Add source.zip to target
 CONFIG(debug,debug|release):CONFIG += qml_debug  # Add qml_debug
 
-#include(gitversion.pri)
+include(gitversion.pri)
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -34,7 +34,8 @@ RESOURCES += \
         qml.qrc \
         js.qrc \
         ../shared/quick_shared.qrc \
-        ../shared/fonts.qrc
+        ../shared/images_shared.qrc \
+	../shared/fonts.qrc
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =  ../shared

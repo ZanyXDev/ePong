@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="award.png">Images/award.png</file>
+	<file alias="shine.svg">Images/shine.svg</file>
+    </qresource>
+</RCC>
