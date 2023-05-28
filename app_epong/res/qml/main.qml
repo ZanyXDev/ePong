@@ -114,6 +114,13 @@ QQC2.ApplicationWindow {
     }
   }
 
+  Component {
+    id: leaderBoardPage
+    LeaderBoardPage {
+      onStepBack: stackView.pop()
+    }
+  }
+
   BasePopup {
     id: popup
   }
