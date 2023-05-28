@@ -96,7 +96,6 @@ QQC2.ApplicationWindow {
       id: menuButtons
       demoPaused: popup.visible
       onMenuCmd: {
-
         switch (cmd) {
         case Utils.MenuCmd.NewGame:
           stackView.pop()
@@ -106,7 +105,14 @@ QQC2.ApplicationWindow {
                 "<center>Don't work now.<br/> Sorry ...</center>")
           popup.open()
           break
-        default:
+        case Utils.MenuCmd.Settings:
+          break
+        case Utils.MenuCmd.LeaderBoards:
+          stackView.push(leaderBoardPage)
+          break
+        case Utils.MenuCmd.Rules:
+          break
+        case Utils.MenuCmd.default:
           AppSingleton.toLog(`Recive cmd ${cmd}`)
           break
         }
