@@ -23,60 +23,68 @@ QQC2.Page {
   background: {
     null
   }
-
-  RowLayout {
-    id: rowTitleLayout
-
-    anchors.top: parent.top
-    visible: true
-    spacing: 8 * DevicePixelRatio
-    height: 72 * DevicePixelRatio
+  ColumnLayout {
+    id: mainPageLayout
+    anchors.fill: parent
+    spacing: 4 * DevicePixelRatio
     Item {
       Layout.fillWidth: true
+      Layout.preferredHeight: 2 * DevicePixelRatio
     }
+    Rectangle {
+      id: titleRect
 
-    Image {
-      id: awardImage
-      Layout.preferredWidth: 64 * DevicePixelRatio
-      Layout.preferredHeight: 64 * DevicePixelRatio
-      Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+      Layout.leftMargin: 4 * DevicePixelRatio
+      Layout.rightMargin: 4 * DevicePixelRatio
+      Layout.preferredHeight: 72 * DevicePixelRatio
+      Layout.preferredWidth: parent.width - (8 * DevicePixelRatio)
 
-      smooth: true
-      fillMode: Image.PreserveAspectFit
-      source: "qrc:/award.png"
-      sourceSize: Qt.size(64 * DevicePixelRatio, 64 * DevicePixelRatio)
-    }
-    Item {
-      Layout.fillWidth: true
-    }
-    QQC2.Label {
-      id: awardLabel
-      Layout.alignment: Qt.AlignCenter
-      Layout.preferredHeight: 24
-      Layout.fillWidth: true
-      font {
-        family: AppSingleton.gameFont.name
-        pointSize: AppSingleton.largeFontSize
+      radius: 4 * DevicePixelRatio
+      color: "transparent"
+      border.color: "darkgrey"
+      RowLayout {
+        id: rowTitleLayout
+        anchors.fill: parent
+        spacing: 8 * DevicePixelRatio
+        Item {
+          Layout.preferredWidth: 12 * DevicePixelRatio
+        }
+        Image {
+          id: awardImage
+          Layout.preferredWidth: 64 * DevicePixelRatio
+          Layout.preferredHeight: 64 * DevicePixelRatio
+          smooth: true
+          fillMode: Image.PreserveAspectFit
+          source: "qrc:/award.png"
+          sourceSize: Qt.size(64 * DevicePixelRatio, 64 * DevicePixelRatio)
+        }
+        Item {
+          Layout.fillWidth: true
+        }
+        QQC2.Label {
+          id: awardLabel
+
+          font {
+            family: AppSingleton.gameFont.name
+            pointSize: AppSingleton.largeFontSize
+          }
+
+          horizontalAlignment: Text.AlignHCenter
+          verticalAlignment: Text.AlignVCenter
+          elide: Text.ElideRight
+          text: qsTr("Most results players!")
+        }
+        Item {
+          Layout.preferredWidth: 12 * DevicePixelRatio
+        }
       }
-
-      horizontalAlignment: Text.AlignHCenter
-      verticalAlignment: Text.AlignVCenter
-      elide: Text.ElideRight
-      text: qsTr("Most results players!")
+    }
+    QQC2.Frame {
+      id: separatorItem
+      Layout.fillHeight: true
+      Layout.preferredWidth: 1 * DevicePixelRatio
     }
   }
-  Rectangle {
-    id: spacerFrame
-    anchors {
-      top: rowTitleLayout.bottom
-      margins: 10 * DevicePixelRatio
-    }
 
-    border.color: "grey"
-
-    visible: true
-    height: 1 * DevicePixelRatio
-    width: parent.width * 0.96
-  }
   // ----- Qt provided non-visual children
 }
