@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 
 import Common 1.0
 import Units 1.0
+import UsersListView 1.0
 
 QQC2.Page {
   id: root
@@ -81,8 +82,19 @@ QQC2.Page {
     }
     QQC2.Frame {
       id: separatorItem
+      Layout.fillWidth: true
+      Layout.preferredHeight: 1 * DevicePixelRatio
+    }
+    UsersListVW {
+      id: usersListview
       Layout.fillHeight: true
-      Layout.preferredWidth: 1 * DevicePixelRatio
+      Layout.leftMargin: 4 * DevicePixelRatio
+      Layout.rightMargin: 4 * DevicePixelRatio
+      Layout.preferredWidth: parent.width - (8 * DevicePixelRatio)
+    }
+    Item {
+      Layout.fillWidth: true
+      Layout.preferredHeight: 2 * DevicePixelRatio
     }
   }
 

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>UsersListView/qmldir</file>
+        <file>UsersListView/users_listview.qml</file>
+        <file>UsersListView/images/avatarf-dark.png</file>
+        <file>UsersListView/images/avatarf-light.png</file>
+        <file>UsersListView/images/avatarm-dark.png</file>
+        <file>UsersListView/images/avatarm-light.png</file>
+    </qresource>
+</RCC>
