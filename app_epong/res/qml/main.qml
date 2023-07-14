@@ -157,6 +157,7 @@ QQC2.ApplicationWindow {
         property: "opacity"
         from: 0.0
         to: 1.0
+        duration: AppSingleton.timer500
       }
     }
     exit: Transition {
@@ -164,6 +165,7 @@ QQC2.ApplicationWindow {
         property: "opacity"
         from: 1.0
         to: 0.0
+        duration: AppSingleton.timer500
       }
     }
   }
