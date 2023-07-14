@@ -101,12 +101,8 @@ QQC2.ApplicationWindow {
         case Utils.MenuCmd.NewGame:
           stackView.pop()
           break
-        case Utils.MenuCmd.NetworkGame:
-          popup.textMsg = qsTr(
-                "<center>Don't work now.<br/> Sorry ...</center>")
-          popup.open()
-          break
         default:
+          popup.open()
           AppSingleton.toLog(`Recive cmd ${cmd}`)
           break
         }
@@ -151,6 +147,7 @@ QQC2.ApplicationWindow {
       elide: Text.ElideRight
       verticalAlignment: Text.AlignVCenter
       horizontalAlignment: Text.AlignHCenter
+      text: qsTr("<center>Don't work now.<br/> Sorry ...</center>")
     }
     enter: Transition {
       NumberAnimation {
