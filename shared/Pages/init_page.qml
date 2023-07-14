@@ -63,6 +63,9 @@ QQC2.Page {
   Connections {
     target: logoItem
     function onTimeToDie() {
+      if (autoStartTimer.running) {
+        autoStartTimer.stop()
+      }
       hideAnimation.start()
       AppSingleton.toLog(`InitPage.onTimeToDie`)
     }
