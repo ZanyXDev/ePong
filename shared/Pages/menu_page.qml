@@ -5,15 +5,26 @@ import QtQuick.Controls 2.15 as QQC2
 import Common 1.0
 import "qrc:/res/js/util.js" as Utils
 
-Item {
+QQC2.Page {
   id: root
-  signal menuCmd(int cmd)
+  // ----- Property Declarations
+  // Required properties should be at the top.
   property alias demoPaused: demoPong.paused
-  AnimatedImage {
+  // ----- Signal declarations
+  signal menuCmd(int cmd)
+  // ----- Size information
+  // ----- Then comes the other properties. There's no predefined order to these.
+  QQC2.StackView.onActivated: {
+    AppSingleton.toLog(`MenuPage.onActivated`)
+  }
+
+  // ----- Visual children.
+  background: AnimatedImage {
     id: demoPong
     anchors.fill: parent
     source: "qrc:/res/images/demo_pong.gif"
   }
+
   ColumnLayout {
     id: mainMenuLayout
     anchors.fill: parent
