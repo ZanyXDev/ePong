@@ -8,16 +8,16 @@ QQC2.Page {
 
   // ----- Property Declarations
   // Required properties should be at the top.
-  property bool firstRun: false
+  property bool firstRun: true
   // ----- Signal declarations
   signal showGameMenu
   // ----- Size information
   // ----- Then comes the other properties. There's no predefined order to these.
   QQC2.StackView.onActivated: {
     AppSingleton.toLog(`InitPage.onActivated firstRun ${firstRun}`)
-    if (!firstRun) {
+    if (firstRun) {
       showAnimation.start()
-      firstRun = true
+      firstRun = false
       autoStartTimer.start()
     } else {
       root.showGameMenu()

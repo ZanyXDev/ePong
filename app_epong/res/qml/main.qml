@@ -92,7 +92,7 @@ QQC2.ApplicationWindow {
 
   Component {
     id: menuPage
-    MenuButtons {
+    MenuPage {
       id: menuButtons
       demoPaused: popup.visible
       onMenuCmd: {
