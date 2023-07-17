@@ -10,6 +10,7 @@ QQC2.Page {
   // ----- Property Declarations
   // Required properties should be at the top.
   property alias demoPaused: demoPong.paused
+
   // ----- Signal declarations
   signal menuCmd(int cmd)
   // ----- Size information
@@ -72,6 +73,9 @@ QQC2.Page {
     Item {
       Layout.fillWidth: true
       Layout.preferredHeight: 2 * DevicePixelRatio
+    }
+    Component.onCompleted: {
+      AppSingleton.toLog(`MenuPage mainMenuLayout completed`)
     }
   }
 }

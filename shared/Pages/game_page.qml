@@ -9,13 +9,19 @@ QQC2.Page {
   // ----- Property Declarations
   // Required properties should be at the top.
   property bool running: false
+  // https://doc.qt.io/qt-5/qtqml-syntax-objectattributes.html#a-note-about-accessing-attached-properties-and-signal-handlers
+  property QQC2.StackView stack: QQC2.StackView.view
   // ----- Signal declarations
   // ----- Size information
   // ----- Then comes the other properties. There's no predefined order to these.
   QQC2.StackView.onActivated: {
-    AppSingleton.toLog(`GamePage.onActivated. state running ${running}`)
+    AppSingleton.toLog(
+          `GamePage.onActivated. state running ${running}, stack ${stack}`)
+
     if (running) {
+
     } else {
+
     }
   }
 
@@ -23,9 +29,17 @@ QQC2.Page {
   background: {
     null
   }
+  QQC2.Button {
+    id: test
+    text: "Back"
+    onClicked: {
+      AppSingleton.toLog(`GamePage.depth ${stack.depth}`)
+      stack.pop()
+      AppSingleton.toLog(`GamePage.depth after pop ${stack.depth}`)
+    }
+  }
 
   // ----- Qt provided non-visual children
-
   Timer {
     id: gameTicTimer
     interval: AppSingleton.timer2000
@@ -35,5 +49,4 @@ QQC2.Page {
 
     }
   }
-
 }

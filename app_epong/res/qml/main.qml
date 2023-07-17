@@ -78,11 +78,12 @@ QQC2.ApplicationWindow {
   // ----- Visual children
   QQC2.StackView {
     id: stackView
+    objectName: "myStackView"
     anchors.fill: parent
 
     initialItem: InitPage {
       onShowGameMenu: {
-        stackView.push(menuPage)
+        stackView.push(menuPageComponent.createObject(appWnd))
       }
     }
     pushEnter: pushEnterTransition
@@ -91,27 +92,32 @@ QQC2.ApplicationWindow {
   }
 
   Component {
-    id: menuPage
-    MenuPage {
-      id: menuButtons
-      demoPaused: popup.visible
-      onMenuCmd: {
+    id: gamePageComponent
+    GamePage {}
+  }
 
+  Component {
+    id: menuPageComponent
+    MenuPage {
+      demoPaused: popup.visible
+
+      onMenuCmd: {
+        AppSingleton.toLog(`Recive cmd ${cmd}`)
         switch (cmd) {
         case Utils.MenuCmd.NewGame:
-          stackView.pop()
+          stackView.push(gamePageComponent.createObject(appWnd))
           break
         default:
           popup.open()
-          AppSingleton.toLog(`Recive cmd ${cmd}`)
           break
         }
       }
+      Component.onDestruction: {
+        AppSingleton.toLog("Destroying menuPageComponent")
+      }
     }
   }
-
   QQC2.Popup {
-    ///TODO extract to separated file
     id: popup
     property alias textMsg: txtLabel.text
     modal: true
