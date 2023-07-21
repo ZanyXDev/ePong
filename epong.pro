@@ -57,6 +57,8 @@ add_source_task{
 android {
     QT += androidextras
 
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
     disable-xcb {
         message("The disable-xcb option has been deprecated. Please use disable-desktop instead.")
         CONFIG += disable-desktop
@@ -72,8 +74,6 @@ android {
         android/gradle/wrapper/gradle-wrapper.properties \
         android/res/values/libs.xml
 
-#ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android/source
-
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
  #       ANDROID_EXTRA_LIBS = \
  #          $$PWD/android/3rdparty/openssl/armeabi-v7a/libcrypto_1_1.so \
@@ -85,3 +85,5 @@ contains(ANDROID_TARGET_ARCH,arm64-v8a) {
         #    $$PWD/android/3rdparty/openssl/arm64-v8a/libssl_1_1.so
  }
 }
+
+d
