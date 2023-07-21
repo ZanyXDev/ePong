@@ -3,7 +3,7 @@
 TEMPLATE +=app
 TARGET = ePong
 
-QT       += core gui qml quick quickcontrols2 multimedia
+QT       += core gui qml quick quickcontrols2 multimedia svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
