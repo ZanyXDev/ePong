@@ -1,0 +1,8 @@
+module common
+singleton AppSingleton 1.0 app_singleton.qml
+Joystick 1.0 joystick.qml
+AppVersionTxt 1.0 app_ver_txt.qml
+BaseButton 1.0 basebutton.qml
+RoundPanel 1.0 round_panel.qml
+RoundImage 1.0 round_image.qml
+LogoItem 1.0 logo_item.qml

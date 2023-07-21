@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/qml/main.qml</file>
+        <file>res/qml/common/app_singleton.qml</file>
+        <file>res/qml/common/app_ver_txt.qml</file>
+        <file>res/qml/common/basebutton.qml</file>
+        <file>res/qml/common/joystick.qml</file>
+        <file>res/qml/common/logo_item.qml</file>
+        <file>res/qml/common/persp_text.qml</file>
+        <file>res/qml/common/qmldir</file>
+        <file>res/qml/common/round_image.qml</file>
+        <file>res/qml/common/round_panel.qml</file>
+        <file>res/qml/pages/game_page.qml</file>
+        <file>res/qml/pages/init_page.qml</file>
+        <file>res/qml/pages/lb_page.qml</file>
+        <file>res/qml/pages/menu_page.qml</file>
+        <file>res/qml/pages/qmldir</file>
+        <file>res/qml/pages/test_page.qml</file>
+        <file>res/qml/effects/shine/qmldir</file>
+        <file>res/qml/effects/shine/shine.qml</file>
+        <file>qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>

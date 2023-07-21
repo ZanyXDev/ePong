@@ -1,6 +1,0 @@
-module Pages
-InitPage 1.0 init_page.qml
-LeaderBoardPage 1.0 lb_page.qml
-MenuPage 1.0 menu_page.qml
-GamePage 1.0 game_page.qml
-TestPage 1.0 test_page.qml
