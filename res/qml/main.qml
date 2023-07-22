@@ -46,9 +46,10 @@ QQC2.ApplicationWindow {
   // ----- Signal handlers
   onScreenOrientationChanged: {
     screenOrientationUpdated(screenOrientation)
-    if (isDebugMode)
-      AppSingleton.toLogTrace(
-            `onScreenOrientationChanged:[${screenOrientation}]`)
+    if (isDebugMode) {
+      console.trace()
+      AppSingleton.toLog(`onScreenOrientationChanged:[${screenOrientation}]`)
+    }
   }
   Component.onDestruction: {
     var bgrIndex = mSettings.currentBgrIndex
@@ -82,9 +83,21 @@ QQC2.ApplicationWindow {
 
     InitPage {
       id: initPage
+      onShowPage: {
+        if (isDebugMode) {
+          console.log()
+          AppSingleton.toLog(`Utils.PagesId.MenuPage=${Utils.PagesId.MenuPage}`)
+          AppSingleton.toLog(`swipeView.currentIndex=${swipeView.currentIndex}`)
+          AppSingleton.toLog(`swipeView.count=${swipeView.count}`)
+        }
+        gotoPage(pageId)
+      }
     }
     MenuPage {
       id: menuPage
+      onShowPage: {
+        gotoPage(pageId)
+      }
     }
   }
 
@@ -93,14 +106,6 @@ QQC2.ApplicationWindow {
     id: mSettings
     category: "BackgroundItem"
     property int currentBgrIndex
-  }
-
-  // ----- Custom non-visual children
-  Connections {
-    target: initPage
-    function showGameMenu() {
-      gotoPage(Units.PagesId.MenuPage)
-    }
   }
 
   // ----- JavaScript functions
