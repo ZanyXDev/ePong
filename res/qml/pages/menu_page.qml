@@ -12,7 +12,7 @@ QQC2.Page {
   property alias demoPaused: demoPong.paused
   readonly property bool pageActive: QQC2.SwipeView.isCurrentItem
   // ----- Signal declarations
-  signal menuCmd(int cmd)
+  signal showPage(int pageId)
   // ----- Size information
   // ----- Then comes the other properties. There's no predefined order to these.
   onPageActiveChanged: {
@@ -33,11 +33,11 @@ QQC2.Page {
     spacing: 2 * DevicePixelRatio
 
     component CmdBtn: BaseButton {
-      property int cmd_id
+      property int page_id
       Layout.preferredWidth: 110 * DevicePixelRatio
       Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
       onClicked: {
-        root.menuCmd(cmd_id)
+          root.showPage(page_id)
       }
     }
 
@@ -47,28 +47,28 @@ QQC2.Page {
     }
     CmdBtn {
       id: newGameBtn
-      cmd_id: Utils.MenuCmd.NewGame
+      page_id: Utils.PagesId.NewGame
       text: qsTr("New game")
     }
     CmdBtn {
       id: newNetGameBtn
       enabled: true
-      cmd_id: Utils.MenuCmd.NetworkGame
+      page_id: Utils.PagesId.NetworkGame
       text: qsTr("Network game")
     }
     CmdBtn {
       id: settingsBtn
-      cmd_id: Utils.MenuCmd.Settings
+      page_id: Utils.PagesId.Settings
       text: qsTr("Settings")
     }
     CmdBtn {
       id: leaderBoradsBtn
-      cmd_id: Utils.MenuCmd.LeaderBoards
+      page_id: Utils.PagesId.LeaderBoards
       text: qsTr("LeaderBoards")
     }
     CmdBtn {
       id: helpBtn
-      cmd_id: Utils.MenuCmd.Rules
+      page_id: Utils.PagesId.Rules
       text: qsTr("Rules")
     }
     Item {
