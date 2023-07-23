@@ -1,15 +1,13 @@
 .pragma library
 
-const MenuCmd = {
-  "NewGame": 0,
-  "NetworkGame": 1,
-  "Settings": 2,
-  "LeaderBoards": 3,
-  "Rules": 4
-}
 const PagesId = {
-  "InitPage": 0,
-  "MenuPage": 1
+  "Init": 0,
+  "Menu": 1,
+  "NewGame": 2,
+  "NetworkGame": 3,
+  "Settings": 4,
+  "LeaderBoards": 5,
+  "Rules": 6
 }
 
 //console.log(`getYFromIndex ${index}  is [y:${y}] position`)

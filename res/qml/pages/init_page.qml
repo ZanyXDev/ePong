@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as QQC2
 import common 1.0
+import "qrc:/res/js/util.js" as Utils
 
 QQC2.Page {
   id: root
@@ -10,7 +11,7 @@ QQC2.Page {
   readonly property bool pageActive: QQC2.SwipeView.isCurrentItem
   property bool firstRun: true
   // ----- Signal declarations
-  signal showGameMenu
+  signal showPage(int pageId)
   // ----- Size information
   // ----- Then comes the other properties. There's no predefined order to these.
   onPageActiveChanged: {
@@ -112,7 +113,7 @@ QQC2.Page {
       value: false
     }
     ScriptAction {
-      script: root.showGameMenu()
+      script: root.showPage(Utils.PagesId.Menu)
     }
   }
 }

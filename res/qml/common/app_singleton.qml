@@ -30,11 +30,6 @@ QtObject {
   readonly property int timer1000: 1000
   readonly property int timer2000: 2000
 
-  function toLogTrace(msg) {
-    console.trace()
-    toLog(msg)
-  }
-
   function toLog(msg) {
     console.log(`${msg}`)
   }
