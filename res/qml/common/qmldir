@@ -6,3 +6,4 @@ BaseButton 1.0 basebutton.qml
 RoundPanel 1.0 round_panel.qml
 RoundImage 1.0 round_image.qml
 LogoItem 1.0 logo_item.qml
+FadeStackLayout 1.0 fade_stack_layout.qml
