@@ -3,14 +3,12 @@
 TEMPLATE +=app
 TARGET = ePong
 
-QT       += core gui qml quick quickcontrols2 multimedia svg
+QT       += core qml quick quickcontrols2 multimedia svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-LANGUAGE  = C++
-
-
-CONFIG += c++17 resources_big
+CONFIG += c++17
+CONFIG += resources_big
 CONFIG(release,debug|release):CONFIG += qtquickcompiler # Qt Quick compiler
 CONFIG(release,debug|release):CONFIG += add_source_task # Add source.zip to target
 CONFIG(debug,debug|release):CONFIG += qml_debug  # Add qml_debug
@@ -32,8 +30,9 @@ SOURCES += \
 RESOURCES += \
         images.qrc \
         qml.qrc \
-        js.qrc \        
+        js.qrc \
         fonts.qrc
+OTHER += ext_res.qrc
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH = $$PWD/res/qml
@@ -42,16 +41,11 @@ QML_DESIGNER_IMPORT_PATH = $$PWD/res/qml
 QML_IMPORT_PATH = $$PWD/res/qml
 QML2_IMPORT_PATH = $$PWD/res/qml
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 add_source_task{
 #https://raymii.org/s/blog/Existing_GPL_software_for_sale.html
     message("add source.zip")
-    system(cd $$PWD; cd ../;rm source.zip; zip -r source.zip .)
-    RESOURCES += source.qrc
+    #system(cd $$PWD; cd ../;rm source.zip; zip -r source.zip .)
+    #RESOURCES += source.qrc
 }
 
 android {
@@ -85,5 +79,3 @@ contains(ANDROID_TARGET_ARCH,arm64-v8a) {
         #    $$PWD/android/3rdparty/openssl/arm64-v8a/libssl_1_1.so
  }
 }
-
-d
