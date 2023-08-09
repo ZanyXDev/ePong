@@ -10,10 +10,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 CONFIG += resources_big
 CONFIG(release,debug|release):CONFIG += qtquickcompiler # Qt Quick compiler
+CONFIG(release,debug|release):CONFIG += add_ext_res_task # Add extra res to target
 CONFIG(release,debug|release):CONFIG += add_source_task # Add source.zip to target
 CONFIG(debug,debug|release):CONFIG += qml_debug  # Add qml_debug
 
-#include(gitversion.pri)
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -32,7 +32,8 @@ RESOURCES += \
         qml.qrc \
         js.qrc \
         fonts.qrc
-OTHER += ext_res.qrc
+
+OTHER_FILES += ext_res.qrc
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH = $$PWD/res/qml
@@ -46,6 +47,11 @@ add_source_task{
     message("add source.zip")
     #system(cd $$PWD; cd ../;rm source.zip; zip -r source.zip .)
     #RESOURCES += source.qrc
+}
+
+add_ext_res_task{
+    message("create extra RESOURCES binary file")
+    system($$PWD/tools/ci/create_ext_res.sh $$[QT_INSTALL_PREFIX])
 }
 
 android {

@@ -1,9 +1,9 @@
 <RCC>
-    <qresource prefix="/ext">
-        <file>res/images/ball.png</file>
-        <file>res/images/particle_ball.png</file>
+    <qresource prefix="/ext/images">
+        <file alias="ball.png">res/images/ball.png</file>
+        <file alias="particle_ball.png">res/images/particle_ball.png</file>
     </qresource>
     <qresource prefix="/ext/music">
-        <file>res/sounds/level_completed.mp3</file>
+        <file alias="level_completed.mp3">res/sounds/level_completed.mp3</file>
     </qresource>
 </RCC>
