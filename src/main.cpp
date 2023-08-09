@@ -4,10 +4,9 @@
 #include <QtGui/QGuiApplication>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
-
 #include <QtQml/qqml.h>
+
 #include <QScreen>
-#include <QVersionNumber>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QtAndroid>
@@ -20,6 +19,7 @@
 #include <QLoggingCategory>
 #endif
 
+
 /*!
  * \brief Make docs encourage readers to query locale right
  * \sa https://codereview.qt-project.org/c/qt/qtdoc/+/297560
@@ -30,7 +30,19 @@ void createAppConfigFolder()
     QDir dirConfig(
                 QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
 #ifdef QT_DEBUG
-    qDebug() << "dirConfig.path()" << dirConfig.path();
+    qDebug() << "AppConfigLocation:" << dirConfig.path();
+#endif
+    if (dirConfig.exists() == false) {
+        dirConfig.mkpath(dirConfig.path());
+    }
+}
+
+void createAppDataFolder()
+{
+    QDir dirConfig(
+                QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+#ifdef QT_DEBUG
+    qDebug() << "AppDataLocation:" << dirConfig.path();
 #endif
     if (dirConfig.exists() == false) {
         dirConfig.mkpath(dirConfig.path());
@@ -39,6 +51,7 @@ void createAppConfigFolder()
 
 double getDevicePixelRatio(){
     int density = 0;
+    /// TODO Extract to separated class
 #ifdef Q_OS_ANDROID
     //  BUG with dpi on some androids: https://bugreports.qt-project.org/browse/QTBUG-35701
     // density = QtAndroid::androidActivity().callMethod<jint>("getScreenDpi");
@@ -107,16 +120,15 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     createAppConfigFolder();
-
+    createAppDataFolder();
     QCoreApplication::setOrganizationName("ZanyXDev");
-    QCoreApplication::setApplicationName("ePong");
-    QVersionNumber v1(0,1,3);
+    QCoreApplication::setApplicationName(PACKAGE_NAME_STR);
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:/res/qml");
 
-#ifdef QT_DEBUG
+#ifdef QT_DEBUG_OFF
     qDebug() << "importPathList:" <<engine.importPathList();
     QDirIterator it(":", QDirIterator::Subdirectories);
     while (it.hasNext()) {
@@ -127,7 +139,7 @@ int main(int argc, char *argv[]) {
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("mm",getDevicePixelRatio() / 25.4);
     context->setContextProperty("pt", 1);
-    context->setContextProperty("AppVersion",v1.toString());
+    context->setContextProperty("AppVersion",VERSION_STR);
 
 #ifdef Q_OS_ANDROID
     context->setContextProperty("isMobile",true);

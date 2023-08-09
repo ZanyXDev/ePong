@@ -43,6 +43,8 @@ VERSION_CODE=$(xmlstarlet sel -t -v manifest/@android:versionCode < $MANIFEST)
 PACKAGE_NAME=$(xmlstarlet sel -t -v manifest/@package < $MANIFEST)
 ACTIVITY_NAME=$(xmlstarlet sel -t -v manifest/application/activity/@android:name < $MANIFEST)
 
+echo $VERSION_NAME > $CUR_GIT_ROOT/version.txt
+echo $PACKAGE_NAME > $CUR_GIT_ROOT/package_name.txt
 $RCC -binary $EXT_RES -o $GEN_DIR/main.$VERSION_CODE.$PACKAGE_NAME.obb
 
 popd >& /dev/null
