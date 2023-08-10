@@ -55,7 +55,6 @@ int main(int argc, char *argv[]) {
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:/res/qml");
 
-
 #ifndef Q_OS_ANDROID
     QScreen *screen = qApp->primaryScreen();
     m_hal->setDotsPerInch( screen->physicalDotsPerInch() );
