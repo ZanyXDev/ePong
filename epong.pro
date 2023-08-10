@@ -26,7 +26,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+HEADERS += \
+    src/hal.h
+
 SOURCES += \
+        src/hal.cpp \
         src/main.cpp
 
 RESOURCES += \
@@ -87,3 +91,4 @@ contains(ANDROID_TARGET_ARCH,arm64-v8a) {
         #    $$PWD/android/3rdparty/openssl/arm64-v8a/libssl_1_1.so
  }
 }
+

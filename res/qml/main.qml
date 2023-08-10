@@ -10,6 +10,7 @@ import pages 1.0
 import effects.shine 1.0
 
 import "qrc:/res/js/util.js" as Utils
+import io.github.zanyxdev.epong.hal 1.0
 
 QQC2.ApplicationWindow {
   id: appWnd
