@@ -55,10 +55,25 @@ double Hal::getDevicePixelRatio() const{
                                                density >= 240 ? 1.5 : 1;
 }
 
-void Hal::setDebugMode(bool newDebugmode)
-{
+void Hal::setDebugMode(bool newDebugmode){
     if (m_debugmode == newDebugmode)
         return;
     m_debugmode = newDebugmode;
     emit debugModeChanged();
+}
+
+/*!
+ * \brief Make docs encourage readers to query locale right
+ * \sa https://codereview.qt-project.org/c/qt/qtdoc/+/297560
+ */
+void Hal::createAppFolder(){
+    ///TODO check permissions
+    QDir dirAppConfig( QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) );
+    if (dirAppConfig.exists() == false) {
+        dirAppConfig.mkpath(dirAppConfig.path());
+    }
+    QDir dirAppData( QStandardPaths::writableLocation(QStandardPaths::AppDataLocation ) );
+    if (dirAppData.exists() == false) {
+        dirAppData.mkpath(dirAppData.path());
+    }
 }

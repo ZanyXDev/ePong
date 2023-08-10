@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QObject>
+#include <QtCore/QDir>
+#include <QtCore/QStandardPaths>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QtAndroid>
@@ -16,6 +18,7 @@ class Hal : public QObject
     Q_PROPERTY(bool debugmode READ getDebugMode WRITE setDebugMode NOTIFY debugModeChanged);
 public:
     explicit Hal(QObject *parent = nullptr);
+
     const QString &getUpTime() const { return m_uptime; }
     double getDevicePixelRatio() const;
     bool getDebugMode() const { return m_debugMode; }
@@ -23,6 +26,7 @@ public:
     void setDebugMode(bool newDebugmode);
     void setDotsPerInch(qreal m_dpi) { m_physicalDotsPerInch = m_dpi; }
     void setDevicePixelRatio(qreal m_dpr) { m_devicePixelRatio = m_dpr; }
+    void createAppFolder();
 public slots:
     Q_INVOKABLE void updateInfo();
 

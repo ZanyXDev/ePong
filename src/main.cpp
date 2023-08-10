@@ -1,6 +1,5 @@
 #include <QtCore/QCoreApplication>
-#include <QtCore/QDir>
-#include <QtCore/QStandardPaths>
+
 #include <QtCore/QTranslator>
 #include <QtGui/QGuiApplication>
 
@@ -22,42 +21,18 @@
 
 #include "hal.h"
 
-/*!
- * \brief Make docs encourage readers to query locale right
- * \sa https://codereview.qt-project.org/c/qt/qtdoc/+/297560
- */
-// create folder AppConfigLocation
-void createAppConfigFolder()
-{
-    QDir dirConfig(
-                QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
-#ifdef QT_DEBUG
-    qDebug() << "AppConfigLocation:" << dirConfig.path();
-#endif
-    if (dirConfig.exists() == false) {
-        dirConfig.mkpath(dirConfig.path());
-    }
-}
 
-void createAppDataFolder()
-{
-    QDir dirConfig(
-                QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
-#ifdef QT_DEBUG
-    qDebug() << "AppDataLocation:" << dirConfig.path();
-#endif
-    if (dirConfig.exists() == false) {
-        dirConfig.mkpath(dirConfig.path());
-    }
-}
+
 
 int main(int argc, char *argv[]) {
 
+    // Allocate [Hal] before the engine to ensure that it outlives it !!
+    QScopedPointer<Hal> m_hal(new Hal);
+    m_hal->createAppFolder();
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-    createAppConfigFolder();
-    createAppDataFolder();
+
     QCoreApplication::setOrganizationName("ZanyXDev");
     QCoreApplication::setApplicationName(PACKAGE_NAME_STR);
     QGuiApplication app(argc, argv);
@@ -80,11 +55,10 @@ int main(int argc, char *argv[]) {
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:/res/qml");
 
-    // Allocate [Hal] before the engine to ensure that it outlives it !!
-    QScopedPointer<Hal> m_hal(new Hal);
+
 #ifndef Q_OS_ANDROID
     QScreen *screen = qApp->primaryScreen();
-    m_hal->setDotsPerInch(screen->physicalDotsPerInch());
+    m_hal->setDotsPerInch( screen->physicalDotsPerInch() );
     m_hal->setDevicePixelRatio( screen->devicePixelRatio() );
 #endif
 
