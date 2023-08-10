@@ -2,14 +2,15 @@
 
 Hal::Hal(QObject *parent)
     : QObject{parent}
-    , m_uptime("")
     , m_dpr(1)
-    , m_debugMode(false)
     , m_physicalDotsPerInch(0)
     , m_devicePixelRatio(0)
+    , m_debugMode(false)
+    , m_externalStorageAccessGranted(false)
 {
 
 }
+
 
 void Hal::updateInfo(){
 
@@ -55,11 +56,37 @@ double Hal::getDevicePixelRatio() const{
                                                density >= 240 ? 1.5 : 1;
 }
 
+bool Hal::getDebugMode() const
+{
+    return m_debugMode;
+}
+
+bool Hal::externalStorageAccessGranted() const
+{
+    return m_externalStorageAccessGranted;
+}
+
 void Hal::setDebugMode(bool newDebugmode){
-    if (m_debugmode == newDebugmode)
+    if (m_debugMode == newDebugmode){
         return;
-    m_debugmode = newDebugmode;
-    emit debugModeChanged();
+    }
+    m_debugMode = newDebugmode;
+}
+
+void Hal::setDotsPerInch(qreal m_dpi)
+{
+    if (m_physicalDotsPerInch == m_dpi){
+        return;
+    }
+    m_physicalDotsPerInch = m_dpi;
+}
+
+void Hal::setDevicePixelRatio(qreal m_dpr)
+{
+    if (m_devicePixelRatio == m_dpr){
+        return;
+    }
+     m_devicePixelRatio = m_dpr;
 }
 
 /*!
