@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 
     // Register the singleton type provider with QML by calling this
     // function in an initialization function.
-    qmlRegisterSingletonInstance("io.github.zanyxdev.epong.hal", 1, 0,
+    qmlRegisterSingletonInstance("io.github.zanyxdev.epong", 1, 0,
                                  "HAL", m_hal.get()
                                  );
 

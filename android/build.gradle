@@ -1,26 +1,28 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+                jcenter()
+                mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.0'
+        classpath 'com.android.tools.build:gradle:4.1.3'
     }
 }
 
 repositories {
     google()
-    jcenter()
+            jcenter()
+            mavenCentral()
 }
 
 apply plugin: 'com.android.application'
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-}
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+  }
 
-android {
+  android {
     /*******************************************************
      * The following variables:
      * - androidBuildToolsVersion,
@@ -36,28 +38,19 @@ android {
 
     compileSdkVersion androidCompileSdkVersion.toInteger()
 
-    buildToolsVersion '28.0.3'
 
-    sourceSets {
+   sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = [qt5AndroidDir + '/src', 'src', 'java']
-            aidl.srcDirs = [qt5AndroidDir + '/src', 'src', 'aidl']
-            res.srcDirs = [qt5AndroidDir + '/res', 'res']
-            resources.srcDirs = ['resources']
-            renderscript.srcDirs = ['src']
-            assets.srcDirs = ['assets']
-            jniLibs.srcDirs = ['libs']
-       }
-    }
+                    java.srcDirs = [qt5AndroidDir + '/src', 'src', 'java']
+                    aidl.srcDirs = [qt5AndroidDir + '/src', 'src', 'aidl']
+                    res.srcDirs = [qt5AndroidDir + '/res', 'res']
+                    resources.srcDirs = ['resources']
+                    renderscript.srcDirs = ['src']
+                    assets.srcDirs = ['assets']
+                    jniLibs.srcDirs = ['libs']
 
-    tasks.withType(JavaCompile) {
-        options.incremental = true
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
 
     lintOptions {
@@ -70,8 +63,30 @@ android {
     }
 
     defaultConfig {
-        resConfig "en"
-        minSdkVersion = qtMinSdkVersion
-        targetSdkVersion = qtTargetSdkVersion
+        applicationId "io.github.zanyxdev.appmobile"
+                multiDexEnabled = true
+                resConfig "en"
+                minSdkVersion = 23
+                targetSdkVersion = 32
     }
+    buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
+
+
 }
+
+dependencies {
+
+    implementation fileTree(dir: 'src', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}
+
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.firebase.firebase-perf'
+

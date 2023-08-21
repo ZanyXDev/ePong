@@ -7,8 +7,16 @@ Hal::Hal(QObject *parent)
     , m_devicePixelRatio(0)
     , m_debugMode(false)
     , m_externalStorageAccessGranted(false)
+    , permissions(nullptr)
 {
-
+#ifdef Q_OS_ANDROID
+     permissions = new Permissions();
+     qDebug() << "Before request permissions->getPermissionResult():" <<permissions->getPermissionResult();
+     permissions->requestExternalStoragePermission();
+     qDebug() << "After request permissions->getPermissionResult():" <<permissions->getPermissionResult();
+#else
+    m_externalStorageAccessGranted = true;
+#endif
 }
 
 

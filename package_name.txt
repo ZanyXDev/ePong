@@ -1,1 +1,1 @@
-io.githib.zanyxdev.epong
+io.github.zanyxdev.epong

@@ -27,11 +27,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 HEADERS += \
-    src/hal.h
+    src/hal.h \
+        src/permissions.h
 
 SOURCES += \
+            src/main.cpp \
         src/hal.cpp \
-        src/main.cpp
+                src/permissions.cpp
 
 RESOURCES += \
         images.qrc \
@@ -78,7 +80,9 @@ android {
         android/gradlew.bat \
         android/gradle/wrapper/gradle-wrapper.jar \
         android/gradle/wrapper/gradle-wrapper.properties \
-        android/res/values/libs.xml
+        android/res/values/libs.xml \
+         android/res/values/strings.xml \
+        android/src/io/github/zanyxdev/epong/ShowPermissionRationale.java
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
  #       ANDROID_EXTRA_LIBS = \
@@ -91,4 +95,17 @@ contains(ANDROID_TARGET_ARCH,arm64-v8a) {
         #    $$PWD/android/3rdparty/openssl/arm64-v8a/libssl_1_1.so
  }
 }
+
+DISTFILES += \
+    android/local.properties \
+    android/res/drawable-hdpi/icon.png \
+    android/res/drawable-ldpi/icon.png \
+    android/res/drawable-mdpi/icon.png \
+    android/res/drawable-xhdpi/icon.png \
+    android/res/drawable-xxhdpi/icon.png \
+    android/res/drawable-xxxhdpi/icon.png \
+    android/src/io/github/zanyxdev/epong/UIDialogFragment.java
+
+SUBDIRS += \
+    android/proguard-rules.pro
 

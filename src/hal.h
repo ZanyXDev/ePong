@@ -3,12 +3,15 @@
 #include <QObject>
 #include <QtCore/QDir>
 #include <QtCore/QStandardPaths>
+#include <QDebug>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QtAndroid>
 #include <QtAndroidExtras/QAndroidJniObject>
 #include <QtAndroidExtras/QAndroidJniEnvironment>
 #endif
+
+#include "permissions.h"
 
 class Hal : public QObject
 {
@@ -43,11 +46,11 @@ signals:
     void externalStorageAccessGrantedChanged();
 
 private:
-
     double m_dpr; // DevicePixelRatio
     qreal m_physicalDotsPerInch;
     qreal m_devicePixelRatio;
     bool m_debugMode;
     bool m_externalStorageAccessGranted;
+    Permissions *permissions;       // Object to request permissions from the Andoid
 };
 
