@@ -3,19 +3,19 @@
 TEMPLATE +=app
 TARGET = ePong
 
-QT       += core gui qml quick quickcontrols2 multimedia svg
+QT       += core qml quick quickcontrols2 multimedia svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-LANGUAGE  = C++
-
-
-CONFIG += c++17 resources_big
+CONFIG += c++17
+CONFIG += resources_big
 CONFIG(release,debug|release):CONFIG += qtquickcompiler # Qt Quick compiler
+CONFIG += add_ext_res_task # Add extra res to target
 CONFIG(release,debug|release):CONFIG += add_source_task # Add source.zip to target
 CONFIG(debug,debug|release):CONFIG += qml_debug  # Add qml_debug
 
-#include(gitversion.pri)
+DEFINES += VERSION_STR=\\\"$$cat(version.txt)\\\"
+DEFINES += PACKAGE_NAME_STR=\\\"$$cat(package_name.txt)\\\"
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -26,14 +26,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+HEADERS += \
+    src/hal.h \
+        src/permissions.h
+
 SOURCES += \
-        src/main.cpp
+            src/main.cpp \
+        src/hal.cpp \
+                src/permissions.cpp
 
 RESOURCES += \
         images.qrc \
         qml.qrc \
-        js.qrc \        
+        js.qrc \
         fonts.qrc
+
+OTHER_FILES += ext_res.qrc
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH = $$PWD/res/qml
@@ -42,16 +50,16 @@ QML_DESIGNER_IMPORT_PATH = $$PWD/res/qml
 QML_IMPORT_PATH = $$PWD/res/qml
 QML2_IMPORT_PATH = $$PWD/res/qml
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 add_source_task{
 #https://raymii.org/s/blog/Existing_GPL_software_for_sale.html
     message("add source.zip")
-    system(cd $$PWD; cd ../;rm source.zip; zip -r source.zip .)
-    RESOURCES += source.qrc
+    #system(cd $$PWD; cd ../;rm source.zip; zip -r source.zip .)
+    #RESOURCES += source.qrc
+}
+
+add_ext_res_task{
+    message("create extra RESOURCES binary file")
+    system($$PWD/tools/ci/create_ext_res.sh $$[QT_INSTALL_PREFIX])
 }
 
 android {
@@ -72,7 +80,9 @@ android {
         android/gradlew.bat \
         android/gradle/wrapper/gradle-wrapper.jar \
         android/gradle/wrapper/gradle-wrapper.properties \
-        android/res/values/libs.xml
+        android/res/values/libs.xml \
+         android/res/values/strings.xml \
+        android/src/io/github/zanyxdev/epong/ShowPermissionRationale.java
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
  #       ANDROID_EXTRA_LIBS = \
@@ -86,4 +96,16 @@ contains(ANDROID_TARGET_ARCH,arm64-v8a) {
  }
 }
 
-d
+DISTFILES += \
+    android/local.properties \
+    android/res/drawable-hdpi/icon.png \
+    android/res/drawable-ldpi/icon.png \
+    android/res/drawable-mdpi/icon.png \
+    android/res/drawable-xhdpi/icon.png \
+    android/res/drawable-xxhdpi/icon.png \
+    android/res/drawable-xxxhdpi/icon.png \
+    android/src/io/github/zanyxdev/epong/UIDialogFragment.java
+
+SUBDIRS += \
+    android/proguard-rules.pro
+

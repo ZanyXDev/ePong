@@ -10,6 +10,7 @@ import pages 1.0
 import effects.shine 1.0
 
 import "qrc:/res/js/util.js" as Utils
+import io.github.zanyxdev.epong 1.0
 
 QQC2.ApplicationWindow {
   id: appWnd
@@ -50,6 +51,9 @@ QQC2.ApplicationWindow {
       console.trace()
       AppSingleton.toLog(`onScreenOrientationChanged:[${screenOrientation}]`)
     }
+  }
+  Component.onCompleted: {
+    AppSingleton.toLog(`HAL.devicePixelRatio :[${HAL.devicePixelRatio}]`)
   }
   Component.onDestruction: {
     var bgrIndex = mSettings.currentBgrIndex
