@@ -17,7 +17,7 @@ StackLayout {
       children[i].opacity = 0
     }
   }
-  currentIndex: 1
+  currentIndex: 0
   Component {
     id: crossFader
     ParallelAnimation {

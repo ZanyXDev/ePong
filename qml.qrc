@@ -19,5 +19,6 @@
         <file>res/qml/effects/shine/qmldir</file>
         <file>res/qml/effects/shine/shine.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>res/qml/common/fade_stack_layout.qml</file>
     </qresource>
 </RCC>
