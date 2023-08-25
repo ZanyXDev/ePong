@@ -1,0 +1,2 @@
+module datamodels
+singleton BallData 1.0 ball_data.qml
