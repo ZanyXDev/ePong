@@ -50,9 +50,33 @@ Item {
             height: buttonHeight
             width: buttonWidth
         }
+        state: mArea.pressed ? "buttonDown" : "buttonUp"
+        states: [
+            State {
+                name: "buttonDown"
+                PropertyChanges {
+                    target: imgBtn
+                    scale: 0.7
+                }
+            },
+            State {
+                name: "buttonUp"
+                PropertyChanges {
+                    target: imgBtn
+                    scale: 1.0
+                }
+            }
+        ]
+        transitions: Transition {
+            NumberAnimation {
+                properties: scale
+                easing.type: Easing.InOutQuad
+                duration: AppSingleton.timer200
+            }
+        }
         layer.enabled: true
         layer.effect: DropShadow {
-            anchors.fill: control
+            anchors.fill: imgBtn
             horizontalOffset: 3
             verticalOffset: 4
             radius: 5
