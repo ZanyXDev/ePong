@@ -11,6 +11,7 @@
         <file>res/qml/common/round_image.qml</file>
         <file>res/qml/common/round_panel.qml</file>
         <file>res/qml/common/pong_pad.qml</file>
+        <file>res/qml/common/base_object.qml</file>
         <file>res/qml/pages/game_page.qml</file>
         <file>res/qml/pages/init_page.qml</file>
         <file>res/qml/pages/lb_page.qml</file>
