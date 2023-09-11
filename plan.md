@@ -1,3 +1,4 @@
+Done is better than perfect
 # План похудения для приложения
 
   * Вынести тяжелые ресурсы в отдельный блок ext_resources.qrc
