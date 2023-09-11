@@ -10,6 +10,18 @@ const PagesId = {
   "Rules": 6
 }
 
+const PongType = {
+  "Left": 0,
+  "Right": 1
+}
+
+const DPadButton = {
+  "Left": 0,
+  "Right": 1,
+  "Up": 2,
+  "Down":3
+}
+
 //console.log(`getYFromIndex ${index}  is [y:${y}] position`)
 function calcRandomDuration(m_behavior_pause) {
   var rnd = 1 + Math.random() * 0.4 - 0.2
