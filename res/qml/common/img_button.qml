@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as QQC2
+import QtGraphicalEffects 1.0
 
-//import QtQuick.Shapes 1.0
 import common 1.0
 import "qrc:/res/js/util.js" as Utils
 
@@ -49,6 +49,16 @@ Item {
         sourceSize {
             height: buttonHeight
             width: buttonWidth
+        }
+        layer.enabled: true
+        layer.effect: DropShadow {
+            anchors.fill: control
+            horizontalOffset: 3
+            verticalOffset: 4
+            radius: 5
+            samples: 11
+            color: "black"
+            opacity: 0.75
         }
         MouseArea {
             id: mArea
