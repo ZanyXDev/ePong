@@ -35,14 +35,15 @@ Item {
     property int buttonWidth: 48 * DevicePixelRatio
     property int buttonHeight: root.buttonWidth
 
-    signal pressed(int btnId)
-    signal clicked(int btnId)
+    signal pressed
+    signal clicked
     signal hoverChanged
 
     Image {
         id: imgBtn
 
         property int m_type: -1
+
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit
         source: Utils.getButtonsImage(m_type)
@@ -90,8 +91,13 @@ Item {
             hoverEnabled: true
             cursorShape: isActive ? Qt.PointingHandCursor : Qt.ArrowCursor
 
-            onClicked: root.clicked(mouse)
-            onPressed: root.pressed(mouse)
+            onClicked: {
+                root.clicked()
+            }
+            onPressed: {
+                root.pressed()
+            }
+
             onHoveredChanged: root.hoverChanged()
         }
     }
