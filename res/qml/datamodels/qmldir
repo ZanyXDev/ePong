@@ -1,2 +1,3 @@
 module datamodels
 singleton BallData 1.0 ball_data.qml
+singleton LeftPongData 1.0 l_pong_data.qml
