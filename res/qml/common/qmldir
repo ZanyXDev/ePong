@@ -7,3 +7,7 @@ RoundPanel 1.0 round_panel.qml
 RoundImage 1.0 round_image.qml
 LogoItem 1.0 logo_item.qml
 FadeStackLayout 1.0 fade_stack_layout.qml
+PongPad 1.0 pong_pad.qml
+BaseObject 1.0 base_object.qml
+ImageButton 1.0 img_button.qml
+Dpads 1.0 dpad_item.qml

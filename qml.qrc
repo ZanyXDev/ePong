@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+        <file>res/qml/pages/qmldir</file>
+        <file>res/qml/datamodels/qmldir</file>
+        <file>res/qml/common/qmldir</file>
         <file>res/qml/main.qml</file>
         <file>res/qml/common/app_singleton.qml</file>
         <file>res/qml/common/app_ver_txt.qml</file>
@@ -7,17 +11,21 @@
         <file>res/qml/common/joystick.qml</file>
         <file>res/qml/common/logo_item.qml</file>
         <file>res/qml/common/persp_text.qml</file>
-        <file>res/qml/common/qmldir</file>
         <file>res/qml/common/round_image.qml</file>
         <file>res/qml/common/round_panel.qml</file>
+        <file>res/qml/common/pong_pad.qml</file>
+        <file>res/qml/common/base_object.qml</file>
+        <file>res/qml/common/dpad_item.qml</file>
+        <file>res/qml/common/img_button.qml</file>
+        <file>res/qml/common/fade_stack_layout.qml</file>
         <file>res/qml/pages/game_page.qml</file>
         <file>res/qml/pages/init_page.qml</file>
         <file>res/qml/pages/lb_page.qml</file>
         <file>res/qml/pages/menu_page.qml</file>
-        <file>res/qml/pages/qmldir</file>
         <file>res/qml/pages/test_page.qml</file>
         <file>res/qml/effects/shine/qmldir</file>
         <file>res/qml/effects/shine/shine.qml</file>
-        <file>qtquickcontrols2.conf</file>
+        <file>res/qml/datamodels/ball_data.qml</file>
+        <file>res/qml/datamodels/l_pong_data.qml</file>
     </qresource>
 </RCC>

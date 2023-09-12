@@ -43,6 +43,10 @@
         <file>res/images/joystick/joystick.png</file>
         <file>res/images/joystick/joystick_frame.png</file>
         <file>res/images/joystick/star.png</file>
+        <file>res/images/buttons/btn_down.png</file>
+        <file>res/images/buttons/btn_up.png</file>
+        <file>res/images/buttons/btn_left.png</file>
+        <file>res/images/buttons/btn_right.png</file>
     </qresource>
     <qresource prefix="/effects"/>
 </RCC>
