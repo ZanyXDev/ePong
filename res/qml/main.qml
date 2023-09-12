@@ -50,10 +50,13 @@ QQC2.ApplicationWindow {
     if (isDebugMode) {
       console.trace()
       AppSingleton.toLog(`onScreenOrientationChanged:[${screenOrientation}]`)
+      AppSingleton.toLog(
+            `appWnd[height,width]:[${appWnd.height / DevicePixelRatio },${appWnd.width / DevicePixelRatio}]`)
     }
   }
   Component.onCompleted: {
     AppSingleton.toLog(`HAL.devicePixelRatio :[${HAL.devicePixelRatio}]`)
+    timerT1.start()
   }
   Component.onDestruction: {
     var bgrIndex = mSettings.currentBgrIndex
@@ -80,31 +83,11 @@ QQC2.ApplicationWindow {
   }
 
   // ----- Visual children
-  QQC2.SwipeView {
-    id: swipeView
-    interactive: false
-    anchors.fill: parent
+  FadeStackLayout {
+    id: fadeLayout
 
-    InitPage {
-      id: initPage
-      onShowPage: {
-        if (isDebugMode) {
-          console.log()
-          AppSingleton.toLog(`Utils.PagesId.MenuPage=${Utils.PagesId.MenuPage}`)
-          AppSingleton.toLog(`swipeView.currentIndex=${swipeView.currentIndex}`)
-          AppSingleton.toLog(`swipeView.count=${swipeView.count}`)
-        }
-        gotoPage(pageId)
-      }
-    }
-    MenuPage {
-      id: menuPage
-      onShowPage: {
-        gotoPage(pageId)
-      }
-    }
+    GamePage {}
   }
-
   //  ----- non visual children
   Settings {
     id: mSettings
@@ -112,16 +95,57 @@ QQC2.ApplicationWindow {
     property int currentBgrIndex
   }
 
-  // ----- JavaScript functions
-  function gotoPage(pageIndex) {
-    if (pageIndex === swipeView.currentIndex) {
-      // it's the current page
-      return
-    }
+  Timer {
+    id: timerT1
+    interval: AppSingleton.timer2000
+    repeat: true
+    running: false
+    onTriggered: {
+      if (isDebugMode) {
 
-    if (pageIndex > swipeView.count || pageIndex < 0) {
-      return
+        // fadeLayout.currentIndex = 1
+      } else {
+        var idx = fadeLayout.currentIndex
+
+        if (idx < fadeLayout.count) {
+          idx++
+        }
+        if (idx == fadeLayout.count) {
+          idx = 0
+        }
+        fadeLayout.currentIndex = idx
+      }
     }
-    swipeView.setCurrentIndex(pageIndex)
   }
+
+  // ----- JavaScript functions
 }
+
+/**
+    Item {
+  splashScreen
+      /**
+       //3..2..1..go
+                  Timer {
+                      id: countdownTimer
+                      interval: 1000
+                      running: root.countdown < 5
+                      repeat: true
+                      onTriggered: root.countdown++
+                  }
+                  Repeater {
+                      model: ["content/gfx/text-blank.png", "content/gfx/text-3.png", "content/gfx/text-2.png", "content/gfx/text-1.png", "content/gfx/text-go.png"]
+                      delegate: Image {
+                          visible: root.countdown <= index
+                          opacity: root.countdown == index ? 0.5 : 0.1
+                          scale: root.countdown >= index ? 1.0 : 0.0
+                          source: modelData
+                          Behavior on opacity { NumberAnimation {} }
+                          Behavior on scale { NumberAnimation {} }
+                      }
+                  }
+
+
+    }
+  */
+
