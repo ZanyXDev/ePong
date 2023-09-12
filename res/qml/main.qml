@@ -13,112 +13,115 @@ import "qrc:/res/js/util.js" as Utils
 import io.github.zanyxdev.epong 1.0
 
 QQC2.ApplicationWindow {
-  id: appWnd
-  // ----- Property Declarations
+    id: appWnd
+    // ----- Property Declarations
 
-  // Required properties should be at the top.
-  readonly property int screenOrientation: Screen.orientation
-  readonly property bool appInForeground: Qt.application.state === Qt.ApplicationActive
-  readonly property real winScale: Math.min(width / 1280.0, height / 720.0)
-  property bool appInitialized: false
+    // Required properties should be at the top.
+    readonly property int screenOrientation: Screen.orientation
+    readonly property bool appInForeground: Qt.application.state === Qt.ApplicationActive
+    readonly property real winScale: Math.min(width / 1280.0, height / 720.0)
+    property bool appInitialized: false
 
-  // ----- Signal declarations
-  signal screenOrientationUpdated(int screenOrientation)
+    // ----- Signal declarations
+    signal screenOrientationUpdated(int screenOrientation)
 
-  // ----- Size information
-  width: (screenOrientation === Qt.PortraitOrientation) ? 320 * DevicePixelRatio : 480
-                                                          * DevicePixelRatio
-  height: (screenOrientation === Qt.PortraitOrientation) ? 480 * DevicePixelRatio : 320
-                                                           * DevicePixelRatio
-  maximumHeight: height
-  maximumWidth: width
+    // ----- Size information
+    width: (screenOrientation === Qt.PortraitOrientation) ? 320 * DevicePixelRatio : 480
+                                                            * DevicePixelRatio
+    height: (screenOrientation === Qt.PortraitOrientation) ? 480 * DevicePixelRatio : 320
+                                                             * DevicePixelRatio
+    maximumHeight: height
+    maximumWidth: width
 
-  minimumHeight: height
-  minimumWidth: width
-  // ----- Then comes the other properties. There's no predefined order to these.
-  visible: true
-  visibility: (isMobile) ? Window.FullScreen : Window.Windowed
-  flags: Qt.Dialog
-  title: qsTr(" ")
-  Screen.orientationUpdateMask: Qt.LandscapeOrientation
+    minimumHeight: height
+    minimumWidth: width
+    // ----- Then comes the other properties. There's no predefined order to these.
+    visible: true
+    visibility: (isMobile) ? Window.FullScreen : Window.Windowed
+    flags: Qt.Dialog
+    title: qsTr(" ")
+    Screen.orientationUpdateMask: Qt.LandscapeOrientation
 
-  // ----- Then attached properties and attached signal handlers.
+    // ----- Then attached properties and attached signal handlers.
 
-  // ----- Signal handlers
-  onScreenOrientationChanged: {
-    screenOrientationUpdated(screenOrientation)
-    if (isDebugMode) {
-      console.trace()
-      AppSingleton.toLog(`onScreenOrientationChanged:[${screenOrientation}]`)
-      AppSingleton.toLog(
-            `appWnd[height,width]:[${appWnd.height / DevicePixelRatio },${appWnd.width / DevicePixelRatio}]`)
-    }
-  }
-  Component.onCompleted: {
-    AppSingleton.toLog(`HAL.devicePixelRatio :[${HAL.devicePixelRatio}]`)
-    timerT1.start()
-  }
-  Component.onDestruction: {
-    var bgrIndex = mSettings.currentBgrIndex
-    bgrIndex++
-    mSettings.currentBgrIndex = (bgrIndex < 20) ? bgrIndex : 0
-  }
-  onAppInForegroundChanged: {
-    if (appInForeground) {
-      if (!appInitialized) {
-        appInitialized = true
-      }
-    } else {
-      if (isDebugMode)
-        AppSingleton.toLog(
-              `appInForeground: [${appInForeground} , appInitialized: ${appInitialized}]`)
-    }
-  }
-
-  background: Image {
-    id: background
-    anchors.fill: parent
-    source: Utils.getNextBgrImage(mSettings.currentBgrIndex)
-    fillMode: Image.PreserveAspectCrop
-  }
-
-  // ----- Visual children
-  FadeStackLayout {
-    id: fadeLayout
-
-    GamePage {}
-  }
-  //  ----- non visual children
-  Settings {
-    id: mSettings
-    category: "BackgroundItem"
-    property int currentBgrIndex
-  }
-
-  Timer {
-    id: timerT1
-    interval: AppSingleton.timer2000
-    repeat: true
-    running: false
-    onTriggered: {
-      if (isDebugMode) {
-
-        // fadeLayout.currentIndex = 1
-      } else {
-        var idx = fadeLayout.currentIndex
-
-        if (idx < fadeLayout.count) {
-          idx++
+    // ----- Signal handlers
+    onScreenOrientationChanged: {
+        screenOrientationUpdated(screenOrientation)
+        if (isDebugMode) {
+            console.trace()
+            AppSingleton.toLog(
+                        `onScreenOrientationChanged:[${screenOrientation}]`)
+            AppSingleton.toLog(
+                        `appWnd[height,width]:[${appWnd.height
+                        / DevicePixelRatio},${appWnd.width / DevicePixelRatio}]`)
         }
-        if (idx == fadeLayout.count) {
-          idx = 0
-        }
-        fadeLayout.currentIndex = idx
-      }
     }
-  }
+    Component.onCompleted: {
+        AppSingleton.toLog(`HAL.devicePixelRatio :[${HAL.devicePixelRatio}]`)
+        timerT1.start()
+    }
+    Component.onDestruction: {
+        var bgrIndex = mSettings.currentBgrIndex
+        bgrIndex++
+        mSettings.currentBgrIndex = (bgrIndex < 20) ? bgrIndex : 0
+    }
+    onAppInForegroundChanged: {
+        if (appInForeground) {
+            if (!appInitialized) {
+                appInitialized = true
+            }
+        } else {
+            if (isDebugMode)
+                AppSingleton.toLog(
+                            `appInForeground: [${appInForeground} , appInitialized: ${appInitialized}]`)
+        }
+    }
 
-  // ----- JavaScript functions
+    background: Image {
+        id: background
+        anchors.fill: parent
+        source: Utils.getNextBgrImage(mSettings.currentBgrIndex)
+        fillMode: Image.PreserveAspectCrop
+        opacity: 0.8
+    }
+
+    // ----- Visual children
+    FadeStackLayout {
+        id: fadeLayout
+
+        GamePage {}
+    }
+    //  ----- non visual children
+    Settings {
+        id: mSettings
+        category: "BackgroundItem"
+        property int currentBgrIndex
+    }
+
+    Timer {
+        id: timerT1
+        interval: AppSingleton.timer2000
+        repeat: true
+        running: false
+        onTriggered: {
+            if (isDebugMode) {
+
+                // fadeLayout.currentIndex = 1
+            } else {
+                var idx = fadeLayout.currentIndex
+
+                if (idx < fadeLayout.count) {
+                    idx++
+                }
+                if (idx == fadeLayout.count) {
+                    idx = 0
+                }
+                fadeLayout.currentIndex = idx
+            }
+        }
+    }
+
+    // ----- JavaScript functions
 }
 
 /**
