@@ -35,7 +35,7 @@ QQC2.Page {
         ///TODO separate item
         id: bgrRect
         anchors.fill: parent
-
+        property int itemWidth: 98 * DevicePixelRatio
         RowLayout {
             id: mainGamePageLayout
             anchors.fill: parent
@@ -43,7 +43,7 @@ QQC2.Page {
             ColumnLayout {
                 id: leftColumnItemLayout
                 Layout.fillHeight: true
-                Layout.preferredWidth: 90 * DevicePixelRatio
+                Layout.preferredWidth: bgrRect.itemWidth
                 spacing: 2 * DevicePixelRatio
                 Item {
                     id: topSpace
@@ -63,16 +63,15 @@ QQC2.Page {
 
                 Dpads {
                     id: dpadsItem
-                    Layout.preferredHeight: 66 * DevicePixelRatio
-                    Layout.preferredWidth: 92 * DevicePixelRatio
+                    Layout.preferredHeight: 68 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
                     onClicked: {
                         AppSingleton.toLog(`dpadsItem.clicked[${btnId}]`)
                     }
                 }
                 Item {
                     id: bottomSpace
-                    //Layout.preferredHeight: 2 * DevicePixelRatio
-                    Layout.fillHeight: true
+                    Layout.preferredHeight: 16 * DevicePixelRatio
                 }
             }
 
