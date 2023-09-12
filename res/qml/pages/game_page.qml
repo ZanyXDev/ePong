@@ -32,16 +32,16 @@ QQC2.Page {
     }
     //-------------
     Item {
+        ///TODO separate item
         id: bgrRect
         anchors.fill: parent
 
         RowLayout {
             id: mainGamePageLayout
             anchors.fill: parent
-
             spacing: 2 * DevicePixelRatio
             ColumnLayout {
-                id: speedBarBtnLayout
+                id: leftColumnItemLayout
                 Layout.fillHeight: true
                 Layout.preferredWidth: 90 * DevicePixelRatio
                 spacing: 2 * DevicePixelRatio
@@ -60,6 +60,7 @@ QQC2.Page {
                               / DevicePixelRatio}h,${speedBarRect.width / DevicePixelRatio}w]`
                     }
                 }
+
                 Dpads {
                     id: dpadsItem
                     Layout.preferredHeight: 66 * DevicePixelRatio
@@ -73,6 +74,13 @@ QQC2.Page {
                     //Layout.preferredHeight: 2 * DevicePixelRatio
                     Layout.fillHeight: true
                 }
+            }
+
+            Rectangle {
+                id: gameField
+                color: "gray"
+                Layout.fillHeight: true
+                Layout.fillWidth: true
             }
         }
     }
