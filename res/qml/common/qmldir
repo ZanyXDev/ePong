@@ -11,3 +11,4 @@ PongPad 1.0 pong_pad.qml
 BaseObject 1.0 base_object.qml
 ImageButton 1.0 img_button.qml
 Dpads 1.0 dpad_item.qml
+EnergyCell 1.0 e_cell.qml

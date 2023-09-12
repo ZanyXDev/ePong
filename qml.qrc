@@ -27,5 +27,6 @@
         <file>res/qml/effects/shine/shine.qml</file>
         <file>res/qml/datamodels/ball_data.qml</file>
         <file>res/qml/datamodels/l_pong_data.qml</file>
+        <file>res/qml/common/e_cell.qml</file>
     </qresource>
 </RCC>
