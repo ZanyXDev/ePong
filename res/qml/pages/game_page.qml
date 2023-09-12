@@ -45,20 +45,43 @@ QQC2.Page {
                 Layout.fillHeight: true
                 Layout.preferredWidth: bgrRect.itemWidth
                 spacing: 2 * DevicePixelRatio
-                Item {
-                    id: topSpace
-                    Layout.fillHeight: true
+                QQC2.Label {
+                    id: labelScore
+                    Layout.preferredHeight: 26 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
+                    Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                    font {
+                        family: AppSingleton.digitalFont.name
+                        pointSize: AppSingleton.middleFontSize
+                    }
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    padding: 2 * DevicePixelRatio
+                    color: "black"
+                    text: qsTr("Score")
+                }
+                QQC2.Label {
+                    id: labelScoreValue
+                    Layout.preferredHeight: 26 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
+                    Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                    font {
+                        family: AppSingleton.digitalFont.name
+                        pointSize: AppSingleton.middleFontSize
+                    }
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    padding: 2 * DevicePixelRatio
+                    color: "black"
+                    text: qsTr("0000")
                 }
 
-                Rectangle {
-                    id: speedBarRect
-                    Layout.preferredHeight: 250 * DevicePixelRatio
-                    Layout.preferredWidth: 92 * DevicePixelRatio
-                    color: "red"
-                    Text {
-                        text: `[${speedBarRect.height
-                              / DevicePixelRatio}h,${speedBarRect.width / DevicePixelRatio}w]`
-                    }
+                EnergyCell {
+                    id: energyCell
+                    Layout.preferredHeight: 184 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
                 }
 
                 Dpads {
