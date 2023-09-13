@@ -82,6 +82,10 @@ QQC2.Page {
                     id: energyCell
                     Layout.preferredHeight: 184 * DevicePixelRatio
                     Layout.preferredWidth: bgrRect.itemWidth
+                    Component.onCompleted: {
+                        AppSingleton.toLog(
+                                    `energyCell [${energyCell.height},${energyCell.width}]`)
+                    }
                 }
 
                 Dpads {
