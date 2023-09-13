@@ -32,47 +32,81 @@ QQC2.Page {
     }
     //-------------
     Item {
+        ///TODO separate item
         id: bgrRect
         anchors.fill: parent
-
+        property int itemWidth: 98 * DevicePixelRatio
         RowLayout {
             id: mainGamePageLayout
             anchors.fill: parent
-
             spacing: 2 * DevicePixelRatio
             ColumnLayout {
-                id: speedBarBtnLayout
+                id: leftColumnItemLayout
                 Layout.fillHeight: true
-                Layout.preferredWidth: 90 * DevicePixelRatio
+                Layout.preferredWidth: bgrRect.itemWidth
                 spacing: 2 * DevicePixelRatio
-                Item {
-                    id: topSpace
-                    Layout.fillHeight: true
+                QQC2.Label {
+                    id: labelScore
+                    Layout.preferredHeight: 26 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
+                    Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                    font {
+                        family: AppSingleton.digitalFont.name
+                        pointSize: AppSingleton.middleFontSize
+                    }
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    padding: 2 * DevicePixelRatio
+                    color: "black"
+                    text: qsTr("Score")
+                }
+                QQC2.Label {
+                    id: labelScoreValue
+                    Layout.preferredHeight: 26 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
+                    Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                    font {
+                        family: AppSingleton.digitalFont.name
+                        pointSize: AppSingleton.middleFontSize
+                    }
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    padding: 2 * DevicePixelRatio
+                    color: "black"
+                    text: qsTr("0000")
                 }
 
-                Rectangle {
-                    id: speedBarRect
-                    Layout.preferredHeight: 250 * DevicePixelRatio
-                    Layout.preferredWidth: 92 * DevicePixelRatio
-                    color: "red"
-                    Text {
-                        text: `[${speedBarRect.height
-                              / DevicePixelRatio}h,${speedBarRect.width / DevicePixelRatio}w]`
+                EnergyCell {
+                    id: energyCell
+                    Layout.preferredHeight: 184 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
+                    Component.onCompleted: {
+                        AppSingleton.toLog(
+                                    `energyCell [${energyCell.height},${energyCell.width}]`)
                     }
                 }
+
                 Dpads {
                     id: dpadsItem
-                    Layout.preferredHeight: 66 * DevicePixelRatio
-                    Layout.preferredWidth: 92 * DevicePixelRatio
+                    Layout.preferredHeight: 68 * DevicePixelRatio
+                    Layout.preferredWidth: bgrRect.itemWidth
                     onClicked: {
                         AppSingleton.toLog(`dpadsItem.clicked[${btnId}]`)
                     }
                 }
                 Item {
                     id: bottomSpace
-                    //Layout.preferredHeight: 2 * DevicePixelRatio
-                    Layout.fillHeight: true
+                    Layout.preferredHeight: 16 * DevicePixelRatio
                 }
+            }
+
+            Rectangle {
+                id: gameField
+                color: "gray"
+                Layout.fillHeight: true
+                Layout.fillWidth: true
             }
         }
     }

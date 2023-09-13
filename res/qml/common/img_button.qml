@@ -46,6 +46,7 @@ Item {
 
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit
+        smooth: true
         source: Utils.getButtonsImage(m_type)
         sourceSize {
             height: buttonHeight
