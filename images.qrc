@@ -49,6 +49,8 @@
         <file>res/images/buttons/btn_right.png</file>
         <file>res/images/noise/bgr_noise_image.png</file>
         <file>res/images/battery2.png</file>
+        <file>res/images/particle/p_item.png</file>
+        <file>res/images/particle/smoke.png</file>
     </qresource>
     <qresource prefix="/effects"/>
 </RCC>
