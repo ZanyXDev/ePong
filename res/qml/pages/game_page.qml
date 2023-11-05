@@ -29,6 +29,7 @@ QQC2.Page {
     }
     Component.onCompleted: {
         AppSingleton.toLog(`GamePage [${root.height}h,${root.width}w]`)
+        gameTicTimer.start()
     }
 
     //-------------
@@ -36,40 +37,65 @@ QQC2.Page {
         ///TODO separate item
         id: bgrRect
         anchors.fill: parent
-
         property int itemWidth: 98 * DevicePixelRatio
-        RowLayout {
-            id: mainGamePageLayout
-            anchors.fill: parent
-            spacing: 4 * DevicePixelRatio
-            Item{
-                  Layout.preferredWidth: 1 * DevicePixelRatio
-            }
-            VSlider {
-                id: verticalSlider
-               // Layout.alignment:Qt.AlignHCenter
-                Layout.fillHeight: true
-                Layout.preferredWidth: 24 * DevicePixelRatio
+        Repeater {
+            id: exampleRepeater
+            model: itemsModel
+            delegate: Image {
+                ///TODO base item for Pong (left,right) and Ball
+                id:tst
+                property int type_id: model.type_id
+                property int animationDuration: 9000
+                fillMode: Image.PreserveAspectFit
+                smooth:true
+                source: model.src
+                x: model.pos_x * DevicePixelRatio
+                y: model.pos_y * DevicePixelRatio
+                sourceSize {
+                    width: model.size_hw * DevicePixelRatio
+                    height: model.size_hw * DevicePixelRatio
+                }
 
-            }
-            Rectangle {
-                id: gameField
-                color: "gray"
-                Layout.fillHeight: true
-                Layout.fillWidth: true
+                RotationAnimator {
+                    target: tst
+                    to: 360
+                    duration: animationDuration
+                    loops: Animation.Infinite
+                    running: model.type_id === 1
+                }
+
             }
         }
+
     }
 
     //-------------
     // ----- Qt provided non-visual children
+    ListModel{
+        id:itemsModel
+        ListElement{
+            type_id:1
+            src: "qrc:/res/images/ball_in_yan.png"
+            pos_x: 10
+            pos_y: 10
+            size_hw: 32
+            speed: 1.0
+            angle: 10.5
+            desc: "ball"
+        }
+    }
+
     Timer {
         id: gameTicTimer
         interval: AppSingleton.timer16
         repeat: true
         running: false
         onTriggered: {
-            Logic.updateWord(BallData)
+            //Logic.updateWord(BallData)
+            itemsModel.get(0).pos_x += 1
+            //itemsModel.setProperty(1, "pos_x", pos_x + 2)
         }
     }
+
+
 }

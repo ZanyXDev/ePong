@@ -51,6 +51,7 @@
         <file>res/images/battery2.png</file>
         <file>res/images/particle/p_item.png</file>
         <file>res/images/particle/smoke.png</file>
+        <file>res/images/ball_in_yan.png</file>
     </qresource>
     <qresource prefix="/effects"/>
 </RCC>

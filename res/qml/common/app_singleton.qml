@@ -31,6 +31,7 @@ QtObject {
   readonly property int timer1000: 1000
   readonly property int timer2000: 2000
   readonly property int timer4000: 4000
+  readonly property int timer9000: 9000
 
   function toLog(msg) {
     console.log(`${msg}`)
